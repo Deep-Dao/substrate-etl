@@ -1,4 +1,5 @@
-endpoint: ${env:PRISMA_ENDPOINT}
+#endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: https://eu1.prisma.sh/nikhil-ranjan/substrate-etl/dev
 datamodel: datamodel.prisma	
 
 generate:	

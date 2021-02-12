@@ -1,7 +1,6 @@
 
-
 import { ApiPromise } from '@polkadot/api';
-import { Option } from '@polkadot/types';
+import { Bytes, Option } from '@polkadot/types';
 import {
   BlockNumber,
   Hash,
@@ -75,10 +74,10 @@ const createTip: Task<NomidotTip[]> = {
 
         const tip = tipInfoRaw.unwrap();
 
-        const reason = await api.query.treasury.reasons.at(
+        const reason: Option<Bytes> = await api.query.treasury.reasons.at(
           blockHash,
           tip.reason
-        )
+        );
 
         const reasonText = reason.isSome ? hexToString(reason.unwrap().toHex()) : '';
 
