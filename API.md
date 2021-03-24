@@ -1,7 +1,7 @@
 # Substrate ETL API
 
 The api is graphql based. To query any data go to prisma endpoint e.g. http://0.0.0.0:4466 and execute the graphql query.
-With graphql various filtering and pagination option is available while querying. Check graphqli docs
+With graphql various filtering and pagination option is available while querying. Check graphqli docs to get the schema and filtering queries.
 
 e.g.
 
