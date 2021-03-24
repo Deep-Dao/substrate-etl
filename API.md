@@ -1,6 +1,7 @@
 # Substrate ETL API
 
 The api is graphql based. To query any data go to prisma endpoint e.g. http://0.0.0.0:4466 and execute the graphql query.
+With graphql various filtering and pagination option is available while querying. Check graphqli docs
 
 e.g.
 
@@ -150,6 +151,71 @@ Query:
       value
     }
     preimageHash
+  }
+}
+```
+
+## Treasury Proposals
+
+```graphql
+{
+  treasurySpendProposals {
+    id
+    treasuryProposalId
+    proposer
+    beneficiary
+    value
+    bond
+    treasuryStatus {
+      id
+      status
+    }
+    motion{
+      id
+      motionProposalId
+    }
+  }
+}
+```
+
+## Tips
+
+```graphql
+{
+  tips {
+    id
+    hash
+    reason
+    who
+    finder
+    finderFee
+    closes
+    tipStatus {
+      id
+      status
+    }
+  }
+}
+```
+
+## Bounties
+
+```graphql
+{
+  bounties(where:{}) {
+    id
+    bountyId
+    proposer
+    value
+    fee
+    curatorDeposit
+    bond
+    curator
+    beneficiary
+    bountyStatus {
+      id
+      status
+    }
   }
 }
 ```
