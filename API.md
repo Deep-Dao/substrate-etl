@@ -58,6 +58,117 @@ Response:
 }
 ```
 
+## Proposals
+
+Query:
+
+```graphql
+{
+	proposals(where:{}) {
+    id
+    proposalId
+    preimage {
+      author
+      preimageArguments {
+        id
+        name
+        value
+      }
+      metaDescription
+      depositAmount
+    }
+    preimageHash
+    author
+    depositAmount
+    proposalStatus {
+      id
+      uniqueStatus
+      status
+    }
+  }
+}
+```
+
+## Referenda
+
+Query
+```graphql
+{
+  referendums {
+    id
+    referendumId
+    voteThreshold
+    delay
+    end
+    preimage {
+      author
+      preimageArguments {
+        id
+        name
+        value
+      }
+      metaDescription
+      depositAmount
+    }
+    referendumStatus {
+      id
+      status
+      uniqueStatus
+    }
+  }
+}
+```
+
+## Motions
+
+Query:
+```graphql
+{
+  motions(where: {}) {
+    id
+    motionProposalId
+    motionProposalHash
+    author
+    metaDescription
+    memberCount
+    motionStatus {
+      id
+      status
+    }
+    preimage {
+      author
+      preimageArguments {
+        id
+        name
+        value
+      }
+      metaDescription
+      depositAmount
+    }
+    motionProposalArguments{
+    	name
+      value
+    }
+    preimageHash
+  }
+}
+```
+
+## Council at Block
+
+```graphql
+{
+  councils(where: {blockNumber:{number_in: [2344234]}}) {
+    id
+    blockNumber {
+      number
+    }
+    members {
+      address
+    }
+  }
+}
+```
 
 
 ## Balance API (Onchain)
