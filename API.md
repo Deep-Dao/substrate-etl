@@ -2,6 +2,63 @@
 
 The api is graphql based. To query any data go to prisma endpoint e.g. http://0.0.0.0:4466 and execute the graphql query.
 
+e.g.
+
+Query:
+
+```graphql
+{
+  motions(where: {}) {
+    id
+    author
+    motionStatus {
+      id
+      status
+    }
+    metaDescription
+    memberCount
+    preimage {
+      author
+      preimageArguments {
+        id
+        name
+        value
+      }
+      metaDescription
+      depositAmount
+    }
+    preimageHash
+  }
+}
+
+```
+
+Response:
+
+```json
+{
+  "data": {
+    "motions": [
+      {
+        "motionStatus": [
+          {
+            "id": "ckmniyiqo000v0719tvf3up5t",
+            "status": "Proposed"
+          }
+        ],
+        "author": "1hCMdtRsaRA4ZTEKpPKPvEjK9rZpGhyFnRHSDhqFMCEayRL",
+        "metaDescription": "[ Approve a proposal. At a later time, the proposal will be allocated to the beneficiary,  and the original deposit will be returned., ,  May only be called from `T::ApproveOrigin`., ,  # <weight>,  - Complexity: O(1).,  - DbReads: `Proposals`, `Approvals`,  - DbWrite: `Approvals`,  # </weight>]",
+        "preimage": null,
+        "preimageHash": null,
+        "id": 3,
+        "memberCount": 8
+      }
+    ]
+  }
+}
+```
+
+
 
 ## Balance API (Onchain)
 
