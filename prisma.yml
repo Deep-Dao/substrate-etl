@@ -1,7 +1,7 @@
 #endpoint: ${env:PRISMA_ENDPOINT}
-endpoint: https://eu1.prisma.sh/nikhil-ranjan/substrate-etl/dev
-datamodel: datamodel.prisma	
+endpoint: http://localhost:4466
+datamodel: datamodel.prisma
 
-generate:	
-  - generator: typescript-client	
+generate:
+  - generator: typescript-client
     output: ./src/generated/prisma-client/
