@@ -181,3 +181,20 @@ type BountyStatus {
   status: String!
   uniqueStatus: String! @unique
 }
+
+type Account {
+  id: ID! @id
+  address: String
+  balance: String
+  display: String
+}
+
+type Vote {
+  id: ID! @id
+  accountId: Int
+  address: String
+  proposalType: String
+  proposalId: Int
+  vote: String
+  conviction: String
+}

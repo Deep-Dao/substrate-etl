@@ -16,6 +16,7 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
+  account: (where?: AccountWhereInput) => Promise<boolean>;
   blockIndex: (where?: BlockIndexWhereInput) => Promise<boolean>;
   blockNumber: (where?: BlockNumberWhereInput) => Promise<boolean>;
   bounty: (where?: BountyWhereInput) => Promise<boolean>;
@@ -40,6 +41,7 @@ export interface Exists {
     where?: TreasurySpendProposalWhereInput
   ) => Promise<boolean>;
   treasuryStatus: (where?: TreasuryStatusWhereInput) => Promise<boolean>;
+  vote: (where?: VoteWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -61,6 +63,25 @@ export interface Prisma {
    * Queries
    */
 
+  account: (where: AccountWhereUniqueInput) => AccountNullablePromise;
+  accounts: (args?: {
+    where?: AccountWhereInput;
+    orderBy?: AccountOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Account>;
+  accountsConnection: (args?: {
+    where?: AccountWhereInput;
+    orderBy?: AccountOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => AccountConnectionPromise;
   blockIndex: (where: BlockIndexWhereUniqueInput) => BlockIndexNullablePromise;
   blockIndexes: (args?: {
     where?: BlockIndexWhereInput;
@@ -463,12 +484,47 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => TreasuryStatusConnectionPromise;
+  vote: (where: VoteWhereUniqueInput) => VoteNullablePromise;
+  votes: (args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Vote>;
+  votesConnection: (args?: {
+    where?: VoteWhereInput;
+    orderBy?: VoteOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => VoteConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
    * Mutations
    */
 
+  createAccount: (data: AccountCreateInput) => AccountPromise;
+  updateAccount: (args: {
+    data: AccountUpdateInput;
+    where: AccountWhereUniqueInput;
+  }) => AccountPromise;
+  updateManyAccounts: (args: {
+    data: AccountUpdateManyMutationInput;
+    where?: AccountWhereInput;
+  }) => BatchPayloadPromise;
+  upsertAccount: (args: {
+    where: AccountWhereUniqueInput;
+    create: AccountCreateInput;
+    update: AccountUpdateInput;
+  }) => AccountPromise;
+  deleteAccount: (where: AccountWhereUniqueInput) => AccountPromise;
+  deleteManyAccounts: (where?: AccountWhereInput) => BatchPayloadPromise;
   createBlockIndex: (data: BlockIndexCreateInput) => BlockIndexPromise;
   updateBlockIndex: (args: {
     data: BlockIndexUpdateInput;
@@ -841,6 +897,22 @@ export interface Prisma {
   deleteManyTreasuryStatuses: (
     where?: TreasuryStatusWhereInput
   ) => BatchPayloadPromise;
+  createVote: (data: VoteCreateInput) => VotePromise;
+  updateVote: (args: {
+    data: VoteUpdateInput;
+    where: VoteWhereUniqueInput;
+  }) => VotePromise;
+  updateManyVotes: (args: {
+    data: VoteUpdateManyMutationInput;
+    where?: VoteWhereInput;
+  }) => BatchPayloadPromise;
+  upsertVote: (args: {
+    where: VoteWhereUniqueInput;
+    create: VoteCreateInput;
+    update: VoteUpdateInput;
+  }) => VotePromise;
+  deleteVote: (where: VoteWhereUniqueInput) => VotePromise;
+  deleteManyVotes: (where?: VoteWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -850,6 +922,9 @@ export interface Prisma {
 }
 
 export interface Subscription {
+  account: (
+    where?: AccountSubscriptionWhereInput
+  ) => AccountSubscriptionPayloadSubscription;
   blockIndex: (
     where?: BlockIndexSubscriptionWhereInput
   ) => BlockIndexSubscriptionPayloadSubscription;
@@ -910,6 +985,9 @@ export interface Subscription {
   treasuryStatus: (
     where?: TreasuryStatusSubscriptionWhereInput
   ) => TreasuryStatusSubscriptionPayloadSubscription;
+  vote: (
+    where?: VoteSubscriptionWhereInput
+  ) => VoteSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -919,6 +997,16 @@ export interface ClientConstructor<T> {
 /**
  * Types
  */
+
+export type AccountOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "address_ASC"
+  | "address_DESC"
+  | "balance_ASC"
+  | "balance_DESC"
+  | "display_ASC"
+  | "display_DESC";
 
 export type BlockIndexOrderByInput =
   | "id_ASC"
@@ -1132,7 +1220,89 @@ export type TreasurySpendProposalOrderByInput =
   | "treasuryProposalId_ASC"
   | "treasuryProposalId_DESC";
 
+export type VoteOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "accountId_ASC"
+  | "accountId_DESC"
+  | "address_ASC"
+  | "address_DESC"
+  | "proposalType_ASC"
+  | "proposalType_DESC"
+  | "proposalId_ASC"
+  | "proposalId_DESC"
+  | "vote_ASC"
+  | "vote_DESC"
+  | "conviction_ASC"
+  | "conviction_DESC";
+
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
+
+export type AccountWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface AccountWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  address?: Maybe<String>;
+  address_not?: Maybe<String>;
+  address_in?: Maybe<String[] | String>;
+  address_not_in?: Maybe<String[] | String>;
+  address_lt?: Maybe<String>;
+  address_lte?: Maybe<String>;
+  address_gt?: Maybe<String>;
+  address_gte?: Maybe<String>;
+  address_contains?: Maybe<String>;
+  address_not_contains?: Maybe<String>;
+  address_starts_with?: Maybe<String>;
+  address_not_starts_with?: Maybe<String>;
+  address_ends_with?: Maybe<String>;
+  address_not_ends_with?: Maybe<String>;
+  balance?: Maybe<String>;
+  balance_not?: Maybe<String>;
+  balance_in?: Maybe<String[] | String>;
+  balance_not_in?: Maybe<String[] | String>;
+  balance_lt?: Maybe<String>;
+  balance_lte?: Maybe<String>;
+  balance_gt?: Maybe<String>;
+  balance_gte?: Maybe<String>;
+  balance_contains?: Maybe<String>;
+  balance_not_contains?: Maybe<String>;
+  balance_starts_with?: Maybe<String>;
+  balance_not_starts_with?: Maybe<String>;
+  balance_ends_with?: Maybe<String>;
+  balance_not_ends_with?: Maybe<String>;
+  display?: Maybe<String>;
+  display_not?: Maybe<String>;
+  display_in?: Maybe<String[] | String>;
+  display_not_in?: Maybe<String[] | String>;
+  display_lt?: Maybe<String>;
+  display_lte?: Maybe<String>;
+  display_gt?: Maybe<String>;
+  display_gte?: Maybe<String>;
+  display_contains?: Maybe<String>;
+  display_not_contains?: Maybe<String>;
+  display_starts_with?: Maybe<String>;
+  display_not_starts_with?: Maybe<String>;
+  display_ends_with?: Maybe<String>;
+  display_not_ends_with?: Maybe<String>;
+  AND?: Maybe<AccountWhereInput[] | AccountWhereInput>;
+  OR?: Maybe<AccountWhereInput[] | AccountWhereInput>;
+  NOT?: Maybe<AccountWhereInput[] | AccountWhereInput>;
+}
 
 export type BlockIndexWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
@@ -2522,6 +2692,121 @@ export type TreasuryStatusWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   uniqueStatus?: Maybe<String>;
 }>;
+
+export type VoteWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
+
+export interface VoteWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  accountId?: Maybe<Int>;
+  accountId_not?: Maybe<Int>;
+  accountId_in?: Maybe<Int[] | Int>;
+  accountId_not_in?: Maybe<Int[] | Int>;
+  accountId_lt?: Maybe<Int>;
+  accountId_lte?: Maybe<Int>;
+  accountId_gt?: Maybe<Int>;
+  accountId_gte?: Maybe<Int>;
+  address?: Maybe<String>;
+  address_not?: Maybe<String>;
+  address_in?: Maybe<String[] | String>;
+  address_not_in?: Maybe<String[] | String>;
+  address_lt?: Maybe<String>;
+  address_lte?: Maybe<String>;
+  address_gt?: Maybe<String>;
+  address_gte?: Maybe<String>;
+  address_contains?: Maybe<String>;
+  address_not_contains?: Maybe<String>;
+  address_starts_with?: Maybe<String>;
+  address_not_starts_with?: Maybe<String>;
+  address_ends_with?: Maybe<String>;
+  address_not_ends_with?: Maybe<String>;
+  proposalType?: Maybe<String>;
+  proposalType_not?: Maybe<String>;
+  proposalType_in?: Maybe<String[] | String>;
+  proposalType_not_in?: Maybe<String[] | String>;
+  proposalType_lt?: Maybe<String>;
+  proposalType_lte?: Maybe<String>;
+  proposalType_gt?: Maybe<String>;
+  proposalType_gte?: Maybe<String>;
+  proposalType_contains?: Maybe<String>;
+  proposalType_not_contains?: Maybe<String>;
+  proposalType_starts_with?: Maybe<String>;
+  proposalType_not_starts_with?: Maybe<String>;
+  proposalType_ends_with?: Maybe<String>;
+  proposalType_not_ends_with?: Maybe<String>;
+  proposalId?: Maybe<Int>;
+  proposalId_not?: Maybe<Int>;
+  proposalId_in?: Maybe<Int[] | Int>;
+  proposalId_not_in?: Maybe<Int[] | Int>;
+  proposalId_lt?: Maybe<Int>;
+  proposalId_lte?: Maybe<Int>;
+  proposalId_gt?: Maybe<Int>;
+  proposalId_gte?: Maybe<Int>;
+  vote?: Maybe<String>;
+  vote_not?: Maybe<String>;
+  vote_in?: Maybe<String[] | String>;
+  vote_not_in?: Maybe<String[] | String>;
+  vote_lt?: Maybe<String>;
+  vote_lte?: Maybe<String>;
+  vote_gt?: Maybe<String>;
+  vote_gte?: Maybe<String>;
+  vote_contains?: Maybe<String>;
+  vote_not_contains?: Maybe<String>;
+  vote_starts_with?: Maybe<String>;
+  vote_not_starts_with?: Maybe<String>;
+  vote_ends_with?: Maybe<String>;
+  vote_not_ends_with?: Maybe<String>;
+  conviction?: Maybe<String>;
+  conviction_not?: Maybe<String>;
+  conviction_in?: Maybe<String[] | String>;
+  conviction_not_in?: Maybe<String[] | String>;
+  conviction_lt?: Maybe<String>;
+  conviction_lte?: Maybe<String>;
+  conviction_gt?: Maybe<String>;
+  conviction_gte?: Maybe<String>;
+  conviction_contains?: Maybe<String>;
+  conviction_not_contains?: Maybe<String>;
+  conviction_starts_with?: Maybe<String>;
+  conviction_not_starts_with?: Maybe<String>;
+  conviction_ends_with?: Maybe<String>;
+  conviction_not_ends_with?: Maybe<String>;
+  AND?: Maybe<VoteWhereInput[] | VoteWhereInput>;
+  OR?: Maybe<VoteWhereInput[] | VoteWhereInput>;
+  NOT?: Maybe<VoteWhereInput[] | VoteWhereInput>;
+}
+
+export interface AccountCreateInput {
+  id?: Maybe<ID_Input>;
+  address?: Maybe<String>;
+  balance?: Maybe<String>;
+  display?: Maybe<String>;
+}
+
+export interface AccountUpdateInput {
+  address?: Maybe<String>;
+  balance?: Maybe<String>;
+  display?: Maybe<String>;
+}
+
+export interface AccountUpdateManyMutationInput {
+  address?: Maybe<String>;
+  balance?: Maybe<String>;
+  display?: Maybe<String>;
+}
 
 export interface BlockIndexCreateInput {
   id?: Maybe<ID_Input>;
@@ -5050,6 +5335,45 @@ export interface TreasuryStatusUpdateManyMutationInput {
   uniqueStatus?: Maybe<String>;
 }
 
+export interface VoteCreateInput {
+  id?: Maybe<ID_Input>;
+  accountId?: Maybe<Int>;
+  address?: Maybe<String>;
+  proposalType?: Maybe<String>;
+  proposalId?: Maybe<Int>;
+  vote?: Maybe<String>;
+  conviction?: Maybe<String>;
+}
+
+export interface VoteUpdateInput {
+  accountId?: Maybe<Int>;
+  address?: Maybe<String>;
+  proposalType?: Maybe<String>;
+  proposalId?: Maybe<Int>;
+  vote?: Maybe<String>;
+  conviction?: Maybe<String>;
+}
+
+export interface VoteUpdateManyMutationInput {
+  accountId?: Maybe<Int>;
+  address?: Maybe<String>;
+  proposalType?: Maybe<String>;
+  proposalId?: Maybe<Int>;
+  vote?: Maybe<String>;
+  conviction?: Maybe<String>;
+}
+
+export interface AccountSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<AccountWhereInput>;
+  AND?: Maybe<AccountSubscriptionWhereInput[] | AccountSubscriptionWhereInput>;
+  OR?: Maybe<AccountSubscriptionWhereInput[] | AccountSubscriptionWhereInput>;
+  NOT?: Maybe<AccountSubscriptionWhereInput[] | AccountSubscriptionWhereInput>;
+}
+
 export interface BlockIndexSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
@@ -5383,8 +5707,128 @@ export interface TreasuryStatusSubscriptionWhereInput {
   >;
 }
 
+export interface VoteSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<VoteWhereInput>;
+  AND?: Maybe<VoteSubscriptionWhereInput[] | VoteSubscriptionWhereInput>;
+  OR?: Maybe<VoteSubscriptionWhereInput[] | VoteSubscriptionWhereInput>;
+  NOT?: Maybe<VoteSubscriptionWhereInput[] | VoteSubscriptionWhereInput>;
+}
+
 export interface NodeNode {
   id: ID_Output;
+}
+
+export interface Account {
+  id: ID_Output;
+  address?: String;
+  balance?: String;
+  display?: String;
+}
+
+export interface AccountPromise extends Promise<Account>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  address: () => Promise<String>;
+  balance: () => Promise<String>;
+  display: () => Promise<String>;
+}
+
+export interface AccountSubscription
+  extends Promise<AsyncIterator<Account>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  address: () => Promise<AsyncIterator<String>>;
+  balance: () => Promise<AsyncIterator<String>>;
+  display: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AccountNullablePromise
+  extends Promise<Account | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  address: () => Promise<String>;
+  balance: () => Promise<String>;
+  display: () => Promise<String>;
+}
+
+export interface AccountConnection {
+  pageInfo: PageInfo;
+  edges: AccountEdge[];
+}
+
+export interface AccountConnectionPromise
+  extends Promise<AccountConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<AccountEdge>>() => T;
+  aggregate: <T = AggregateAccountPromise>() => T;
+}
+
+export interface AccountConnectionSubscription
+  extends Promise<AsyncIterator<AccountConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<AccountEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateAccountSubscription>() => T;
+}
+
+export interface PageInfo {
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
+}
+
+export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
+}
+
+export interface PageInfoSubscription
+  extends Promise<AsyncIterator<PageInfo>>,
+    Fragmentable {
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AccountEdge {
+  node: Account;
+  cursor: String;
+}
+
+export interface AccountEdgePromise extends Promise<AccountEdge>, Fragmentable {
+  node: <T = AccountPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface AccountEdgeSubscription
+  extends Promise<AsyncIterator<AccountEdge>>,
+    Fragmentable {
+  node: <T = AccountSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateAccount {
+  count: Int;
+}
+
+export interface AggregateAccountPromise
+  extends Promise<AggregateAccount>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateAccountSubscription
+  extends Promise<AsyncIterator<AggregateAccount>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface BlockIndex {
@@ -5438,29 +5882,6 @@ export interface BlockIndexConnectionSubscription
   pageInfo: <T = PageInfoSubscription>() => T;
   edges: <T = Promise<AsyncIterator<BlockIndexEdgeSubscription>>>() => T;
   aggregate: <T = AggregateBlockIndexSubscription>() => T;
-}
-
-export interface PageInfo {
-  hasNextPage: Boolean;
-  hasPreviousPage: Boolean;
-  startCursor?: String;
-  endCursor?: String;
-}
-
-export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<Boolean>;
-  hasPreviousPage: () => Promise<Boolean>;
-  startCursor: () => Promise<String>;
-  endCursor: () => Promise<String>;
-}
-
-export interface PageInfoSubscription
-  extends Promise<AsyncIterator<PageInfo>>,
-    Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
-  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
-  startCursor: () => Promise<AsyncIterator<String>>;
-  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BlockIndexEdge {
@@ -7600,6 +8021,104 @@ export interface AggregateTreasuryStatusSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
+export interface Vote {
+  id: ID_Output;
+  accountId?: Int;
+  address?: String;
+  proposalType?: String;
+  proposalId?: Int;
+  vote?: String;
+  conviction?: String;
+}
+
+export interface VotePromise extends Promise<Vote>, Fragmentable {
+  id: () => Promise<ID_Output>;
+  accountId: () => Promise<Int>;
+  address: () => Promise<String>;
+  proposalType: () => Promise<String>;
+  proposalId: () => Promise<Int>;
+  vote: () => Promise<String>;
+  conviction: () => Promise<String>;
+}
+
+export interface VoteSubscription
+  extends Promise<AsyncIterator<Vote>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  accountId: () => Promise<AsyncIterator<Int>>;
+  address: () => Promise<AsyncIterator<String>>;
+  proposalType: () => Promise<AsyncIterator<String>>;
+  proposalId: () => Promise<AsyncIterator<Int>>;
+  vote: () => Promise<AsyncIterator<String>>;
+  conviction: () => Promise<AsyncIterator<String>>;
+}
+
+export interface VoteNullablePromise
+  extends Promise<Vote | null>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  accountId: () => Promise<Int>;
+  address: () => Promise<String>;
+  proposalType: () => Promise<String>;
+  proposalId: () => Promise<Int>;
+  vote: () => Promise<String>;
+  conviction: () => Promise<String>;
+}
+
+export interface VoteConnection {
+  pageInfo: PageInfo;
+  edges: VoteEdge[];
+}
+
+export interface VoteConnectionPromise
+  extends Promise<VoteConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<VoteEdge>>() => T;
+  aggregate: <T = AggregateVotePromise>() => T;
+}
+
+export interface VoteConnectionSubscription
+  extends Promise<AsyncIterator<VoteConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<VoteEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateVoteSubscription>() => T;
+}
+
+export interface VoteEdge {
+  node: Vote;
+  cursor: String;
+}
+
+export interface VoteEdgePromise extends Promise<VoteEdge>, Fragmentable {
+  node: <T = VotePromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface VoteEdgeSubscription
+  extends Promise<AsyncIterator<VoteEdge>>,
+    Fragmentable {
+  node: <T = VoteSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateVote {
+  count: Int;
+}
+
+export interface AggregateVotePromise
+  extends Promise<AggregateVote>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateVoteSubscription
+  extends Promise<AsyncIterator<AggregateVote>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
 export interface BatchPayload {
   count: Long;
 }
@@ -7614,6 +8133,56 @@ export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Long>>;
+}
+
+export interface AccountSubscriptionPayload {
+  mutation: MutationType;
+  node: Account;
+  updatedFields: String[];
+  previousValues: AccountPreviousValues;
+}
+
+export interface AccountSubscriptionPayloadPromise
+  extends Promise<AccountSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = AccountPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = AccountPreviousValuesPromise>() => T;
+}
+
+export interface AccountSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<AccountSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = AccountSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = AccountPreviousValuesSubscription>() => T;
+}
+
+export interface AccountPreviousValues {
+  id: ID_Output;
+  address?: String;
+  balance?: String;
+  display?: String;
+}
+
+export interface AccountPreviousValuesPromise
+  extends Promise<AccountPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  address: () => Promise<String>;
+  balance: () => Promise<String>;
+  display: () => Promise<String>;
+}
+
+export interface AccountPreviousValuesSubscription
+  extends Promise<AsyncIterator<AccountPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  address: () => Promise<AsyncIterator<String>>;
+  balance: () => Promise<AsyncIterator<String>>;
+  display: () => Promise<AsyncIterator<String>>;
 }
 
 export interface BlockIndexSubscriptionPayload {
@@ -8637,6 +9206,65 @@ export interface TreasuryStatusPreviousValuesSubscription
   uniqueStatus: () => Promise<AsyncIterator<String>>;
 }
 
+export interface VoteSubscriptionPayload {
+  mutation: MutationType;
+  node: Vote;
+  updatedFields: String[];
+  previousValues: VotePreviousValues;
+}
+
+export interface VoteSubscriptionPayloadPromise
+  extends Promise<VoteSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = VotePromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = VotePreviousValuesPromise>() => T;
+}
+
+export interface VoteSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<VoteSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = VoteSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = VotePreviousValuesSubscription>() => T;
+}
+
+export interface VotePreviousValues {
+  id: ID_Output;
+  accountId?: Int;
+  address?: String;
+  proposalType?: String;
+  proposalId?: Int;
+  vote?: String;
+  conviction?: String;
+}
+
+export interface VotePreviousValuesPromise
+  extends Promise<VotePreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  accountId: () => Promise<Int>;
+  address: () => Promise<String>;
+  proposalType: () => Promise<String>;
+  proposalId: () => Promise<Int>;
+  vote: () => Promise<String>;
+  conviction: () => Promise<String>;
+}
+
+export interface VotePreviousValuesSubscription
+  extends Promise<AsyncIterator<VotePreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  accountId: () => Promise<AsyncIterator<Int>>;
+  address: () => Promise<AsyncIterator<String>>;
+  proposalType: () => Promise<AsyncIterator<String>>;
+  proposalId: () => Promise<AsyncIterator<Int>>;
+  vote: () => Promise<AsyncIterator<String>>;
+  conviction: () => Promise<AsyncIterator<String>>;
+}
+
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
@@ -8753,6 +9381,14 @@ export const models: Model[] = [
   },
   {
     name: "BountyStatus",
+    embedded: false
+  },
+  {
+    name: "Account",
+    embedded: false
+  },
+  {
+    name: "Vote",
     embedded: false
   }
 ];

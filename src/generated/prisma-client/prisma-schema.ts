@@ -2,7 +2,150 @@
   // Please don't change this file manually but run `prisma generate` to update it.
   // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-export const typeDefs = /* GraphQL */ `type AggregateBlockIndex {
+export const typeDefs = /* GraphQL */ `type Account {
+  id: ID!
+  address: String
+  balance: String
+  display: String
+}
+
+type AccountConnection {
+  pageInfo: PageInfo!
+  edges: [AccountEdge]!
+  aggregate: AggregateAccount!
+}
+
+input AccountCreateInput {
+  id: ID
+  address: String
+  balance: String
+  display: String
+}
+
+type AccountEdge {
+  node: Account!
+  cursor: String!
+}
+
+enum AccountOrderByInput {
+  id_ASC
+  id_DESC
+  address_ASC
+  address_DESC
+  balance_ASC
+  balance_DESC
+  display_ASC
+  display_DESC
+}
+
+type AccountPreviousValues {
+  id: ID!
+  address: String
+  balance: String
+  display: String
+}
+
+type AccountSubscriptionPayload {
+  mutation: MutationType!
+  node: Account
+  updatedFields: [String!]
+  previousValues: AccountPreviousValues
+}
+
+input AccountSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AccountWhereInput
+  AND: [AccountSubscriptionWhereInput!]
+  OR: [AccountSubscriptionWhereInput!]
+  NOT: [AccountSubscriptionWhereInput!]
+}
+
+input AccountUpdateInput {
+  address: String
+  balance: String
+  display: String
+}
+
+input AccountUpdateManyMutationInput {
+  address: String
+  balance: String
+  display: String
+}
+
+input AccountWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  balance: String
+  balance_not: String
+  balance_in: [String!]
+  balance_not_in: [String!]
+  balance_lt: String
+  balance_lte: String
+  balance_gt: String
+  balance_gte: String
+  balance_contains: String
+  balance_not_contains: String
+  balance_starts_with: String
+  balance_not_starts_with: String
+  balance_ends_with: String
+  balance_not_ends_with: String
+  display: String
+  display_not: String
+  display_in: [String!]
+  display_not_in: [String!]
+  display_lt: String
+  display_lte: String
+  display_gt: String
+  display_gte: String
+  display_contains: String
+  display_not_contains: String
+  display_starts_with: String
+  display_not_starts_with: String
+  display_ends_with: String
+  display_not_ends_with: String
+  AND: [AccountWhereInput!]
+  OR: [AccountWhereInput!]
+  NOT: [AccountWhereInput!]
+}
+
+input AccountWhereUniqueInput {
+  id: ID
+}
+
+type AggregateAccount {
+  count: Int!
+}
+
+type AggregateBlockIndex {
   count: Int!
 }
 
@@ -79,6 +222,10 @@ type AggregateTreasurySpendProposal {
 }
 
 type AggregateTreasuryStatus {
+  count: Int!
+}
+
+type AggregateVote {
   count: Int!
 }
 
@@ -2094,6 +2241,12 @@ input MotionWhereUniqueInput {
 }
 
 type Mutation {
+  createAccount(data: AccountCreateInput!): Account!
+  updateAccount(data: AccountUpdateInput!, where: AccountWhereUniqueInput!): Account
+  updateManyAccounts(data: AccountUpdateManyMutationInput!, where: AccountWhereInput): BatchPayload!
+  upsertAccount(where: AccountWhereUniqueInput!, create: AccountCreateInput!, update: AccountUpdateInput!): Account!
+  deleteAccount(where: AccountWhereUniqueInput!): Account
+  deleteManyAccounts(where: AccountWhereInput): BatchPayload!
   createBlockIndex(data: BlockIndexCreateInput!): BlockIndex!
   updateBlockIndex(data: BlockIndexUpdateInput!, where: BlockIndexWhereUniqueInput!): BlockIndex
   updateManyBlockIndexes(data: BlockIndexUpdateManyMutationInput!, where: BlockIndexWhereInput): BatchPayload!
@@ -2213,6 +2366,12 @@ type Mutation {
   upsertTreasuryStatus(where: TreasuryStatusWhereUniqueInput!, create: TreasuryStatusCreateInput!, update: TreasuryStatusUpdateInput!): TreasuryStatus!
   deleteTreasuryStatus(where: TreasuryStatusWhereUniqueInput!): TreasuryStatus
   deleteManyTreasuryStatuses(where: TreasuryStatusWhereInput): BatchPayload!
+  createVote(data: VoteCreateInput!): Vote!
+  updateVote(data: VoteUpdateInput!, where: VoteWhereUniqueInput!): Vote
+  updateManyVotes(data: VoteUpdateManyMutationInput!, where: VoteWhereInput): BatchPayload!
+  upsertVote(where: VoteWhereUniqueInput!, create: VoteCreateInput!, update: VoteUpdateInput!): Vote!
+  deleteVote(where: VoteWhereUniqueInput!): Vote
+  deleteManyVotes(where: VoteWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -3543,6 +3702,9 @@ input ProposalWhereUniqueInput {
 }
 
 type Query {
+  account(where: AccountWhereUniqueInput!): Account
+  accounts(where: AccountWhereInput, orderBy: AccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Account]!
+  accountsConnection(where: AccountWhereInput, orderBy: AccountOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AccountConnection!
   blockIndex(where: BlockIndexWhereUniqueInput!): BlockIndex
   blockIndexes(where: BlockIndexWhereInput, orderBy: BlockIndexOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [BlockIndex]!
   blockIndexesConnection(where: BlockIndexWhereInput, orderBy: BlockIndexOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): BlockIndexConnection!
@@ -3603,6 +3765,9 @@ type Query {
   treasuryStatus(where: TreasuryStatusWhereUniqueInput!): TreasuryStatus
   treasuryStatuses(where: TreasuryStatusWhereInput, orderBy: TreasuryStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TreasuryStatus]!
   treasuryStatusesConnection(where: TreasuryStatusWhereInput, orderBy: TreasuryStatusOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TreasuryStatusConnection!
+  vote(where: VoteWhereUniqueInput!): Vote
+  votes(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Vote]!
+  votesConnection(where: VoteWhereInput, orderBy: VoteOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): VoteConnection!
   node(id: ID!): Node
 }
 
@@ -4072,6 +4237,7 @@ input ReferendumWhereUniqueInput {
 }
 
 type Subscription {
+  account(where: AccountSubscriptionWhereInput): AccountSubscriptionPayload
   blockIndex(where: BlockIndexSubscriptionWhereInput): BlockIndexSubscriptionPayload
   blockNumber(where: BlockNumberSubscriptionWhereInput): BlockNumberSubscriptionPayload
   bounty(where: BountySubscriptionWhereInput): BountySubscriptionPayload
@@ -4092,6 +4258,7 @@ type Subscription {
   tipStatus(where: TipStatusSubscriptionWhereInput): TipStatusSubscriptionPayload
   treasurySpendProposal(where: TreasurySpendProposalSubscriptionWhereInput): TreasurySpendProposalSubscriptionPayload
   treasuryStatus(where: TreasuryStatusSubscriptionWhereInput): TreasuryStatusSubscriptionPayload
+  vote(where: VoteSubscriptionWhereInput): VoteSubscriptionPayload
 }
 
 type Tip {
@@ -5025,5 +5192,195 @@ input TreasuryStatusWhereInput {
 input TreasuryStatusWhereUniqueInput {
   id: ID
   uniqueStatus: String
+}
+
+type Vote {
+  id: ID!
+  accountId: Int
+  address: String
+  proposalType: String
+  proposalId: Int
+  vote: String
+  conviction: String
+}
+
+type VoteConnection {
+  pageInfo: PageInfo!
+  edges: [VoteEdge]!
+  aggregate: AggregateVote!
+}
+
+input VoteCreateInput {
+  id: ID
+  accountId: Int
+  address: String
+  proposalType: String
+  proposalId: Int
+  vote: String
+  conviction: String
+}
+
+type VoteEdge {
+  node: Vote!
+  cursor: String!
+}
+
+enum VoteOrderByInput {
+  id_ASC
+  id_DESC
+  accountId_ASC
+  accountId_DESC
+  address_ASC
+  address_DESC
+  proposalType_ASC
+  proposalType_DESC
+  proposalId_ASC
+  proposalId_DESC
+  vote_ASC
+  vote_DESC
+  conviction_ASC
+  conviction_DESC
+}
+
+type VotePreviousValues {
+  id: ID!
+  accountId: Int
+  address: String
+  proposalType: String
+  proposalId: Int
+  vote: String
+  conviction: String
+}
+
+type VoteSubscriptionPayload {
+  mutation: MutationType!
+  node: Vote
+  updatedFields: [String!]
+  previousValues: VotePreviousValues
+}
+
+input VoteSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: VoteWhereInput
+  AND: [VoteSubscriptionWhereInput!]
+  OR: [VoteSubscriptionWhereInput!]
+  NOT: [VoteSubscriptionWhereInput!]
+}
+
+input VoteUpdateInput {
+  accountId: Int
+  address: String
+  proposalType: String
+  proposalId: Int
+  vote: String
+  conviction: String
+}
+
+input VoteUpdateManyMutationInput {
+  accountId: Int
+  address: String
+  proposalType: String
+  proposalId: Int
+  vote: String
+  conviction: String
+}
+
+input VoteWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  accountId: Int
+  accountId_not: Int
+  accountId_in: [Int!]
+  accountId_not_in: [Int!]
+  accountId_lt: Int
+  accountId_lte: Int
+  accountId_gt: Int
+  accountId_gte: Int
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  proposalType: String
+  proposalType_not: String
+  proposalType_in: [String!]
+  proposalType_not_in: [String!]
+  proposalType_lt: String
+  proposalType_lte: String
+  proposalType_gt: String
+  proposalType_gte: String
+  proposalType_contains: String
+  proposalType_not_contains: String
+  proposalType_starts_with: String
+  proposalType_not_starts_with: String
+  proposalType_ends_with: String
+  proposalType_not_ends_with: String
+  proposalId: Int
+  proposalId_not: Int
+  proposalId_in: [Int!]
+  proposalId_not_in: [Int!]
+  proposalId_lt: Int
+  proposalId_lte: Int
+  proposalId_gt: Int
+  proposalId_gte: Int
+  vote: String
+  vote_not: String
+  vote_in: [String!]
+  vote_not_in: [String!]
+  vote_lt: String
+  vote_lte: String
+  vote_gt: String
+  vote_gte: String
+  vote_contains: String
+  vote_not_contains: String
+  vote_starts_with: String
+  vote_not_starts_with: String
+  vote_ends_with: String
+  vote_not_ends_with: String
+  conviction: String
+  conviction_not: String
+  conviction_in: [String!]
+  conviction_not_in: [String!]
+  conviction_lt: String
+  conviction_lte: String
+  conviction_gt: String
+  conviction_gte: String
+  conviction_contains: String
+  conviction_not_contains: String
+  conviction_starts_with: String
+  conviction_not_starts_with: String
+  conviction_ends_with: String
+  conviction_not_ends_with: String
+  AND: [VoteWhereInput!]
+  OR: [VoteWhereInput!]
+  NOT: [VoteWhereInput!]
+}
+
+input VoteWhereUniqueInput {
+  id: ID
 }
 `
