@@ -5196,11 +5196,12 @@ input TreasuryStatusWhereUniqueInput {
 
 type Vote {
   id: ID!
-  accountId: Int
-  address: String
   proposalType: String
   proposalId: Int
+  address: String
+  addressDisplay: String
   vote: String
+  amount: String
   conviction: String
 }
 
@@ -5212,11 +5213,12 @@ type VoteConnection {
 
 input VoteCreateInput {
   id: ID
-  accountId: Int
-  address: String
   proposalType: String
   proposalId: Int
+  address: String
+  addressDisplay: String
   vote: String
+  amount: String
   conviction: String
 }
 
@@ -5228,27 +5230,30 @@ type VoteEdge {
 enum VoteOrderByInput {
   id_ASC
   id_DESC
-  accountId_ASC
-  accountId_DESC
-  address_ASC
-  address_DESC
   proposalType_ASC
   proposalType_DESC
   proposalId_ASC
   proposalId_DESC
+  address_ASC
+  address_DESC
+  addressDisplay_ASC
+  addressDisplay_DESC
   vote_ASC
   vote_DESC
+  amount_ASC
+  amount_DESC
   conviction_ASC
   conviction_DESC
 }
 
 type VotePreviousValues {
   id: ID!
-  accountId: Int
-  address: String
   proposalType: String
   proposalId: Int
+  address: String
+  addressDisplay: String
   vote: String
+  amount: String
   conviction: String
 }
 
@@ -5271,20 +5276,22 @@ input VoteSubscriptionWhereInput {
 }
 
 input VoteUpdateInput {
-  accountId: Int
-  address: String
   proposalType: String
   proposalId: Int
+  address: String
+  addressDisplay: String
   vote: String
+  amount: String
   conviction: String
 }
 
 input VoteUpdateManyMutationInput {
-  accountId: Int
-  address: String
   proposalType: String
   proposalId: Int
+  address: String
+  addressDisplay: String
   vote: String
+  amount: String
   conviction: String
 }
 
@@ -5303,28 +5310,6 @@ input VoteWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  accountId: Int
-  accountId_not: Int
-  accountId_in: [Int!]
-  accountId_not_in: [Int!]
-  accountId_lt: Int
-  accountId_lte: Int
-  accountId_gt: Int
-  accountId_gte: Int
-  address: String
-  address_not: String
-  address_in: [String!]
-  address_not_in: [String!]
-  address_lt: String
-  address_lte: String
-  address_gt: String
-  address_gte: String
-  address_contains: String
-  address_not_contains: String
-  address_starts_with: String
-  address_not_starts_with: String
-  address_ends_with: String
-  address_not_ends_with: String
   proposalType: String
   proposalType_not: String
   proposalType_in: [String!]
@@ -5347,6 +5332,34 @@ input VoteWhereInput {
   proposalId_lte: Int
   proposalId_gt: Int
   proposalId_gte: Int
+  address: String
+  address_not: String
+  address_in: [String!]
+  address_not_in: [String!]
+  address_lt: String
+  address_lte: String
+  address_gt: String
+  address_gte: String
+  address_contains: String
+  address_not_contains: String
+  address_starts_with: String
+  address_not_starts_with: String
+  address_ends_with: String
+  address_not_ends_with: String
+  addressDisplay: String
+  addressDisplay_not: String
+  addressDisplay_in: [String!]
+  addressDisplay_not_in: [String!]
+  addressDisplay_lt: String
+  addressDisplay_lte: String
+  addressDisplay_gt: String
+  addressDisplay_gte: String
+  addressDisplay_contains: String
+  addressDisplay_not_contains: String
+  addressDisplay_starts_with: String
+  addressDisplay_not_starts_with: String
+  addressDisplay_ends_with: String
+  addressDisplay_not_ends_with: String
   vote: String
   vote_not: String
   vote_in: [String!]
@@ -5361,6 +5374,20 @@ input VoteWhereInput {
   vote_not_starts_with: String
   vote_ends_with: String
   vote_not_ends_with: String
+  amount: String
+  amount_not: String
+  amount_in: [String!]
+  amount_not_in: [String!]
+  amount_lt: String
+  amount_lte: String
+  amount_gt: String
+  amount_gte: String
+  amount_contains: String
+  amount_not_contains: String
+  amount_starts_with: String
+  amount_not_starts_with: String
+  amount_ends_with: String
+  amount_not_ends_with: String
   conviction: String
   conviction_not: String
   conviction_in: [String!]

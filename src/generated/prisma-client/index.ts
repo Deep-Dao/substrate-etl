@@ -1223,16 +1223,18 @@ export type TreasurySpendProposalOrderByInput =
 export type VoteOrderByInput =
   | "id_ASC"
   | "id_DESC"
-  | "accountId_ASC"
-  | "accountId_DESC"
-  | "address_ASC"
-  | "address_DESC"
   | "proposalType_ASC"
   | "proposalType_DESC"
   | "proposalId_ASC"
   | "proposalId_DESC"
+  | "address_ASC"
+  | "address_DESC"
+  | "addressDisplay_ASC"
+  | "addressDisplay_DESC"
   | "vote_ASC"
   | "vote_DESC"
+  | "amount_ASC"
+  | "amount_DESC"
   | "conviction_ASC"
   | "conviction_DESC";
 
@@ -2712,28 +2714,6 @@ export interface VoteWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  accountId?: Maybe<Int>;
-  accountId_not?: Maybe<Int>;
-  accountId_in?: Maybe<Int[] | Int>;
-  accountId_not_in?: Maybe<Int[] | Int>;
-  accountId_lt?: Maybe<Int>;
-  accountId_lte?: Maybe<Int>;
-  accountId_gt?: Maybe<Int>;
-  accountId_gte?: Maybe<Int>;
-  address?: Maybe<String>;
-  address_not?: Maybe<String>;
-  address_in?: Maybe<String[] | String>;
-  address_not_in?: Maybe<String[] | String>;
-  address_lt?: Maybe<String>;
-  address_lte?: Maybe<String>;
-  address_gt?: Maybe<String>;
-  address_gte?: Maybe<String>;
-  address_contains?: Maybe<String>;
-  address_not_contains?: Maybe<String>;
-  address_starts_with?: Maybe<String>;
-  address_not_starts_with?: Maybe<String>;
-  address_ends_with?: Maybe<String>;
-  address_not_ends_with?: Maybe<String>;
   proposalType?: Maybe<String>;
   proposalType_not?: Maybe<String>;
   proposalType_in?: Maybe<String[] | String>;
@@ -2756,6 +2736,34 @@ export interface VoteWhereInput {
   proposalId_lte?: Maybe<Int>;
   proposalId_gt?: Maybe<Int>;
   proposalId_gte?: Maybe<Int>;
+  address?: Maybe<String>;
+  address_not?: Maybe<String>;
+  address_in?: Maybe<String[] | String>;
+  address_not_in?: Maybe<String[] | String>;
+  address_lt?: Maybe<String>;
+  address_lte?: Maybe<String>;
+  address_gt?: Maybe<String>;
+  address_gte?: Maybe<String>;
+  address_contains?: Maybe<String>;
+  address_not_contains?: Maybe<String>;
+  address_starts_with?: Maybe<String>;
+  address_not_starts_with?: Maybe<String>;
+  address_ends_with?: Maybe<String>;
+  address_not_ends_with?: Maybe<String>;
+  addressDisplay?: Maybe<String>;
+  addressDisplay_not?: Maybe<String>;
+  addressDisplay_in?: Maybe<String[] | String>;
+  addressDisplay_not_in?: Maybe<String[] | String>;
+  addressDisplay_lt?: Maybe<String>;
+  addressDisplay_lte?: Maybe<String>;
+  addressDisplay_gt?: Maybe<String>;
+  addressDisplay_gte?: Maybe<String>;
+  addressDisplay_contains?: Maybe<String>;
+  addressDisplay_not_contains?: Maybe<String>;
+  addressDisplay_starts_with?: Maybe<String>;
+  addressDisplay_not_starts_with?: Maybe<String>;
+  addressDisplay_ends_with?: Maybe<String>;
+  addressDisplay_not_ends_with?: Maybe<String>;
   vote?: Maybe<String>;
   vote_not?: Maybe<String>;
   vote_in?: Maybe<String[] | String>;
@@ -2770,6 +2778,20 @@ export interface VoteWhereInput {
   vote_not_starts_with?: Maybe<String>;
   vote_ends_with?: Maybe<String>;
   vote_not_ends_with?: Maybe<String>;
+  amount?: Maybe<String>;
+  amount_not?: Maybe<String>;
+  amount_in?: Maybe<String[] | String>;
+  amount_not_in?: Maybe<String[] | String>;
+  amount_lt?: Maybe<String>;
+  amount_lte?: Maybe<String>;
+  amount_gt?: Maybe<String>;
+  amount_gte?: Maybe<String>;
+  amount_contains?: Maybe<String>;
+  amount_not_contains?: Maybe<String>;
+  amount_starts_with?: Maybe<String>;
+  amount_not_starts_with?: Maybe<String>;
+  amount_ends_with?: Maybe<String>;
+  amount_not_ends_with?: Maybe<String>;
   conviction?: Maybe<String>;
   conviction_not?: Maybe<String>;
   conviction_in?: Maybe<String[] | String>;
@@ -5337,29 +5359,32 @@ export interface TreasuryStatusUpdateManyMutationInput {
 
 export interface VoteCreateInput {
   id?: Maybe<ID_Input>;
-  accountId?: Maybe<Int>;
-  address?: Maybe<String>;
   proposalType?: Maybe<String>;
   proposalId?: Maybe<Int>;
+  address?: Maybe<String>;
+  addressDisplay?: Maybe<String>;
   vote?: Maybe<String>;
+  amount?: Maybe<String>;
   conviction?: Maybe<String>;
 }
 
 export interface VoteUpdateInput {
-  accountId?: Maybe<Int>;
-  address?: Maybe<String>;
   proposalType?: Maybe<String>;
   proposalId?: Maybe<Int>;
+  address?: Maybe<String>;
+  addressDisplay?: Maybe<String>;
   vote?: Maybe<String>;
+  amount?: Maybe<String>;
   conviction?: Maybe<String>;
 }
 
 export interface VoteUpdateManyMutationInput {
-  accountId?: Maybe<Int>;
-  address?: Maybe<String>;
   proposalType?: Maybe<String>;
   proposalId?: Maybe<Int>;
+  address?: Maybe<String>;
+  addressDisplay?: Maybe<String>;
   vote?: Maybe<String>;
+  amount?: Maybe<String>;
   conviction?: Maybe<String>;
 }
 
@@ -8023,21 +8048,23 @@ export interface AggregateTreasuryStatusSubscription
 
 export interface Vote {
   id: ID_Output;
-  accountId?: Int;
-  address?: String;
   proposalType?: String;
   proposalId?: Int;
+  address?: String;
+  addressDisplay?: String;
   vote?: String;
+  amount?: String;
   conviction?: String;
 }
 
 export interface VotePromise extends Promise<Vote>, Fragmentable {
   id: () => Promise<ID_Output>;
-  accountId: () => Promise<Int>;
-  address: () => Promise<String>;
   proposalType: () => Promise<String>;
   proposalId: () => Promise<Int>;
+  address: () => Promise<String>;
+  addressDisplay: () => Promise<String>;
   vote: () => Promise<String>;
+  amount: () => Promise<String>;
   conviction: () => Promise<String>;
 }
 
@@ -8045,11 +8072,12 @@ export interface VoteSubscription
   extends Promise<AsyncIterator<Vote>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  accountId: () => Promise<AsyncIterator<Int>>;
-  address: () => Promise<AsyncIterator<String>>;
   proposalType: () => Promise<AsyncIterator<String>>;
   proposalId: () => Promise<AsyncIterator<Int>>;
+  address: () => Promise<AsyncIterator<String>>;
+  addressDisplay: () => Promise<AsyncIterator<String>>;
   vote: () => Promise<AsyncIterator<String>>;
+  amount: () => Promise<AsyncIterator<String>>;
   conviction: () => Promise<AsyncIterator<String>>;
 }
 
@@ -8057,11 +8085,12 @@ export interface VoteNullablePromise
   extends Promise<Vote | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  accountId: () => Promise<Int>;
-  address: () => Promise<String>;
   proposalType: () => Promise<String>;
   proposalId: () => Promise<Int>;
+  address: () => Promise<String>;
+  addressDisplay: () => Promise<String>;
   vote: () => Promise<String>;
+  amount: () => Promise<String>;
   conviction: () => Promise<String>;
 }
 
@@ -9233,11 +9262,12 @@ export interface VoteSubscriptionPayloadSubscription
 
 export interface VotePreviousValues {
   id: ID_Output;
-  accountId?: Int;
-  address?: String;
   proposalType?: String;
   proposalId?: Int;
+  address?: String;
+  addressDisplay?: String;
   vote?: String;
+  amount?: String;
   conviction?: String;
 }
 
@@ -9245,11 +9275,12 @@ export interface VotePreviousValuesPromise
   extends Promise<VotePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  accountId: () => Promise<Int>;
-  address: () => Promise<String>;
   proposalType: () => Promise<String>;
   proposalId: () => Promise<Int>;
+  address: () => Promise<String>;
+  addressDisplay: () => Promise<String>;
   vote: () => Promise<String>;
+  amount: () => Promise<String>;
   conviction: () => Promise<String>;
 }
 
@@ -9257,11 +9288,12 @@ export interface VotePreviousValuesSubscription
   extends Promise<AsyncIterator<VotePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  accountId: () => Promise<AsyncIterator<Int>>;
-  address: () => Promise<AsyncIterator<String>>;
   proposalType: () => Promise<AsyncIterator<String>>;
   proposalId: () => Promise<AsyncIterator<Int>>;
+  address: () => Promise<AsyncIterator<String>>;
+  addressDisplay: () => Promise<AsyncIterator<String>>;
   vote: () => Promise<AsyncIterator<String>>;
+  amount: () => Promise<AsyncIterator<String>>;
   conviction: () => Promise<AsyncIterator<String>>;
 }
 
