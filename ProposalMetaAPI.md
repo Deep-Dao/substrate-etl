@@ -1,4 +1,6 @@
-# To fetch title and description for any proposal use polkassembly apis. Polkassembly is used to store title and description of proposals created on chain.
+# Proposal Title and Descriptions
+
+To fetch title and description for any proposal use polkassembly apis. Polkassembly is used to store title and description of proposals created on chain.
 
 Referendum
 ===
