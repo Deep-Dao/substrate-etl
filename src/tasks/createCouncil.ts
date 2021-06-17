@@ -8,6 +8,7 @@ import { prisma } from '../generated/prisma-client';
 import { Cached, NomidotCouncil, Task } from './types';
 
 const l = logger('Task: Councils');
+const network = process.env.NETWORK;
 
 /*
  *  ======= Table (Council) ======
@@ -42,6 +43,7 @@ const createCouncil: Task<NomidotCouncil> = {
   write: async (blockNumber: BlockNumber, value: NomidotCouncil) => {
     if (value.length) {
       const newCouncil = await prisma.createCouncil({
+        network,
         blockNumber: {
           connect: {
             number: blockNumber.toNumber(),

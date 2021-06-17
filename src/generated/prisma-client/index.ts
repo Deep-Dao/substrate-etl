@@ -600,6 +600,10 @@ export interface Prisma {
     data: CouncilUpdateInput;
     where: CouncilWhereUniqueInput;
   }) => CouncilPromise;
+  updateManyCouncils: (args: {
+    data: CouncilUpdateManyMutationInput;
+    where?: CouncilWhereInput;
+  }) => BatchPayloadPromise;
   upsertCouncil: (args: {
     where: CouncilWhereUniqueInput;
     create: CouncilCreateInput;
@@ -1001,6 +1005,8 @@ export interface ClientConstructor<T> {
 export type AccountOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "address_ASC"
   | "address_DESC"
   | "balance_ASC"
@@ -1021,6 +1027,8 @@ export type BlockIndexOrderByInput =
 export type BlockNumberOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "number_ASC"
   | "number_DESC"
   | "authoredBy_ASC"
@@ -1041,6 +1049,8 @@ export type BountyStatusOrderByInput =
 export type BountyOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "proposer_ASC"
   | "proposer_DESC"
   | "value_ASC"
@@ -1061,10 +1071,16 @@ export type BountyOrderByInput =
 export type CouncilMemberOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "address_ASC"
   | "address_DESC";
 
-export type CouncilOrderByInput = "id_ASC" | "id_DESC";
+export type CouncilOrderByInput =
+  | "id_ASC"
+  | "id_DESC"
+  | "network_ASC"
+  | "network_DESC";
 
 export type MotionProposalArgumentOrderByInput =
   | "id_ASC"
@@ -1123,6 +1139,8 @@ export type TreasuryStatusOrderByInput =
 export type MotionOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "author_ASC"
   | "author_DESC"
   | "memberCount_ASC"
@@ -1143,6 +1161,8 @@ export type MotionOrderByInput =
 export type PreimageOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "author_ASC"
   | "author_DESC"
   | "depositAmount_ASC"
@@ -1159,6 +1179,8 @@ export type PreimageOrderByInput =
 export type ProposalOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "author_ASC"
   | "author_DESC"
   | "depositAmount_ASC"
@@ -1171,6 +1193,8 @@ export type ProposalOrderByInput =
 export type ReferendumOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "delay_ASC"
   | "delay_DESC"
   | "end_ASC"
@@ -1193,6 +1217,8 @@ export type TipStatusOrderByInput =
 export type TipOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "hash_ASC"
   | "hash_DESC"
   | "reason_ASC"
@@ -1209,6 +1235,8 @@ export type TipOrderByInput =
 export type TreasurySpendProposalOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "proposer_ASC"
   | "proposer_DESC"
   | "beneficiary_ASC"
@@ -1223,6 +1251,8 @@ export type TreasurySpendProposalOrderByInput =
 export type VoteOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "network_ASC"
+  | "network_DESC"
   | "proposalType_ASC"
   | "proposalType_DESC"
   | "proposalId_ASC"
@@ -1259,6 +1289,20 @@ export interface AccountWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   address?: Maybe<String>;
   address_not?: Maybe<String>;
   address_in?: Maybe<String[] | String>;
@@ -1382,6 +1426,20 @@ export interface BlockNumberWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   number?: Maybe<Int>;
   number_not?: Maybe<Int>;
   number_in?: Maybe<Int[] | Int>;
@@ -1495,6 +1553,20 @@ export interface BountyWhereInput {
   id_lte?: Maybe<Int>;
   id_gt?: Maybe<Int>;
   id_gte?: Maybe<Int>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   proposer?: Maybe<String>;
   proposer_not?: Maybe<String>;
   proposer_in?: Maybe<String[] | String>;
@@ -1633,6 +1705,20 @@ export interface CouncilMemberWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   address?: Maybe<String>;
   address_not?: Maybe<String>;
   address_in?: Maybe<String[] | String>;
@@ -1670,6 +1756,20 @@ export interface CouncilWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   blockNumber?: Maybe<BlockNumberWhereInput>;
   members_every?: Maybe<CouncilMemberWhereInput>;
   members_some?: Maybe<CouncilMemberWhereInput>;
@@ -1753,6 +1853,20 @@ export interface MotionWhereInput {
   id_lte?: Maybe<Int>;
   id_gt?: Maybe<Int>;
   id_gte?: Maybe<Int>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   author?: Maybe<String>;
   author_not?: Maybe<String>;
   author_in?: Maybe<String[] | String>;
@@ -1931,6 +2045,20 @@ export interface PreimageWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   author?: Maybe<String>;
   author_not?: Maybe<String>;
   author_in?: Maybe<String[] | String>;
@@ -2038,6 +2166,20 @@ export interface ProposalWhereInput {
   id_lte?: Maybe<Int>;
   id_gt?: Maybe<Int>;
   id_gte?: Maybe<Int>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   author?: Maybe<String>;
   author_not?: Maybe<String>;
   author_in?: Maybe<String[] | String>;
@@ -2241,6 +2383,20 @@ export interface ReferendumWhereInput {
   id_lte?: Maybe<Int>;
   id_gt?: Maybe<Int>;
   id_gte?: Maybe<Int>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   delay?: Maybe<Int>;
   delay_not?: Maybe<Int>;
   delay_in?: Maybe<Int[] | Int>;
@@ -2361,6 +2517,20 @@ export interface TreasurySpendProposalWhereInput {
   id_lte?: Maybe<Int>;
   id_gt?: Maybe<Int>;
   id_gte?: Maybe<Int>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   proposer?: Maybe<String>;
   proposer_not?: Maybe<String>;
   proposer_in?: Maybe<String[] | String>;
@@ -2594,6 +2764,20 @@ export interface TipWhereInput {
   id_lte?: Maybe<Int>;
   id_gt?: Maybe<Int>;
   id_gte?: Maybe<Int>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   hash?: Maybe<String>;
   hash_not?: Maybe<String>;
   hash_in?: Maybe<String[] | String>;
@@ -2714,6 +2898,20 @@ export interface VoteWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   proposalType?: Maybe<String>;
   proposalType_not?: Maybe<String>;
   proposalType_in?: Maybe<String[] | String>;
@@ -2813,18 +3011,21 @@ export interface VoteWhereInput {
 
 export interface AccountCreateInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   address?: Maybe<String>;
   balance?: Maybe<String>;
   display?: Maybe<String>;
 }
 
 export interface AccountUpdateInput {
+  network?: Maybe<String>;
   address?: Maybe<String>;
   balance?: Maybe<String>;
   display?: Maybe<String>;
 }
 
 export interface AccountUpdateManyMutationInput {
+  network?: Maybe<String>;
   address?: Maybe<String>;
   balance?: Maybe<String>;
   display?: Maybe<String>;
@@ -2851,6 +3052,7 @@ export interface BlockIndexUpdateManyMutationInput {
 
 export interface BlockNumberCreateInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   number: Int;
   authoredBy: String;
   startDateTime: DateTimeInput;
@@ -2858,6 +3060,7 @@ export interface BlockNumberCreateInput {
 }
 
 export interface BlockNumberUpdateInput {
+  network?: Maybe<String>;
   number?: Maybe<Int>;
   authoredBy?: Maybe<String>;
   startDateTime?: Maybe<DateTimeInput>;
@@ -2865,6 +3068,7 @@ export interface BlockNumberUpdateInput {
 }
 
 export interface BlockNumberUpdateManyMutationInput {
+  network?: Maybe<String>;
   number?: Maybe<Int>;
   authoredBy?: Maybe<String>;
   startDateTime?: Maybe<DateTimeInput>;
@@ -2872,6 +3076,7 @@ export interface BlockNumberUpdateManyMutationInput {
 }
 
 export interface BountyCreateInput {
+  network?: Maybe<String>;
   proposer: String;
   value: String;
   fee?: Maybe<String>;
@@ -2906,6 +3111,7 @@ export interface BlockNumberCreateOneInput {
 }
 
 export interface BountyUpdateInput {
+  network?: Maybe<String>;
   proposer?: Maybe<String>;
   value?: Maybe<String>;
   fee?: Maybe<String>;
@@ -2966,6 +3172,7 @@ export interface BlockNumberUpdateOneRequiredInput {
 }
 
 export interface BlockNumberUpdateDataInput {
+  network?: Maybe<String>;
   number?: Maybe<Int>;
   authoredBy?: Maybe<String>;
   startDateTime?: Maybe<DateTimeInput>;
@@ -3042,6 +3249,7 @@ export interface BountyStatusUpdateManyDataInput {
 }
 
 export interface BountyUpdateManyMutationInput {
+  network?: Maybe<String>;
   proposer?: Maybe<String>;
   value?: Maybe<String>;
   fee?: Maybe<String>;
@@ -3066,6 +3274,7 @@ export interface BountyCreateOneWithoutBountyStatusInput {
 }
 
 export interface BountyCreateWithoutBountyStatusInput {
+  network?: Maybe<String>;
   proposer: String;
   value: String;
   fee?: Maybe<String>;
@@ -3091,6 +3300,7 @@ export interface BountyUpdateOneRequiredWithoutBountyStatusInput {
 }
 
 export interface BountyUpdateWithoutBountyStatusDataInput {
+  network?: Maybe<String>;
   proposer?: Maybe<String>;
   value?: Maybe<String>;
   fee?: Maybe<String>;
@@ -3113,6 +3323,7 @@ export interface BountyStatusUpdateManyMutationInput {
 
 export interface CouncilCreateInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   blockNumber: BlockNumberCreateOneInput;
   members?: Maybe<CouncilMemberCreateManyWithoutCouncilsInput>;
 }
@@ -3129,10 +3340,12 @@ export interface CouncilMemberCreateManyWithoutCouncilsInput {
 
 export interface CouncilMemberCreateWithoutCouncilsInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   address: String;
 }
 
 export interface CouncilUpdateInput {
+  network?: Maybe<String>;
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
   members?: Maybe<CouncilMemberUpdateManyWithoutCouncilsInput>;
 }
@@ -3175,6 +3388,7 @@ export interface CouncilMemberUpdateWithWhereUniqueWithoutCouncilsInput {
 }
 
 export interface CouncilMemberUpdateWithoutCouncilsDataInput {
+  network?: Maybe<String>;
   address?: Maybe<String>;
 }
 
@@ -3199,6 +3413,20 @@ export interface CouncilMemberScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   address?: Maybe<String>;
   address_not?: Maybe<String>;
   address_in?: Maybe<String[] | String>;
@@ -3224,11 +3452,17 @@ export interface CouncilMemberUpdateManyWithWhereNestedInput {
 }
 
 export interface CouncilMemberUpdateManyDataInput {
+  network?: Maybe<String>;
   address?: Maybe<String>;
+}
+
+export interface CouncilUpdateManyMutationInput {
+  network?: Maybe<String>;
 }
 
 export interface CouncilMemberCreateInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   address: String;
   councils?: Maybe<CouncilCreateManyWithoutMembersInput>;
 }
@@ -3242,10 +3476,12 @@ export interface CouncilCreateManyWithoutMembersInput {
 
 export interface CouncilCreateWithoutMembersInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   blockNumber: BlockNumberCreateOneInput;
 }
 
 export interface CouncilMemberUpdateInput {
+  network?: Maybe<String>;
   address?: Maybe<String>;
   councils?: Maybe<CouncilUpdateManyWithoutMembersInput>;
 }
@@ -3267,6 +3503,10 @@ export interface CouncilUpdateManyWithoutMembersInput {
     | CouncilUpsertWithWhereUniqueWithoutMembersInput
   >;
   deleteMany?: Maybe<CouncilScalarWhereInput[] | CouncilScalarWhereInput>;
+  updateMany?: Maybe<
+    | CouncilUpdateManyWithWhereNestedInput[]
+    | CouncilUpdateManyWithWhereNestedInput
+  >;
 }
 
 export interface CouncilUpdateWithWhereUniqueWithoutMembersInput {
@@ -3275,6 +3515,7 @@ export interface CouncilUpdateWithWhereUniqueWithoutMembersInput {
 }
 
 export interface CouncilUpdateWithoutMembersDataInput {
+  network?: Maybe<String>;
   blockNumber?: Maybe<BlockNumberUpdateOneRequiredInput>;
 }
 
@@ -3299,16 +3540,41 @@ export interface CouncilScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  network?: Maybe<String>;
+  network_not?: Maybe<String>;
+  network_in?: Maybe<String[] | String>;
+  network_not_in?: Maybe<String[] | String>;
+  network_lt?: Maybe<String>;
+  network_lte?: Maybe<String>;
+  network_gt?: Maybe<String>;
+  network_gte?: Maybe<String>;
+  network_contains?: Maybe<String>;
+  network_not_contains?: Maybe<String>;
+  network_starts_with?: Maybe<String>;
+  network_not_starts_with?: Maybe<String>;
+  network_ends_with?: Maybe<String>;
+  network_not_ends_with?: Maybe<String>;
   AND?: Maybe<CouncilScalarWhereInput[] | CouncilScalarWhereInput>;
   OR?: Maybe<CouncilScalarWhereInput[] | CouncilScalarWhereInput>;
   NOT?: Maybe<CouncilScalarWhereInput[] | CouncilScalarWhereInput>;
 }
 
+export interface CouncilUpdateManyWithWhereNestedInput {
+  where: CouncilScalarWhereInput;
+  data: CouncilUpdateManyDataInput;
+}
+
+export interface CouncilUpdateManyDataInput {
+  network?: Maybe<String>;
+}
+
 export interface CouncilMemberUpdateManyMutationInput {
+  network?: Maybe<String>;
   address?: Maybe<String>;
 }
 
 export interface MotionCreateInput {
+  network?: Maybe<String>;
   author: String;
   memberCount: Int;
   metaDescription: String;
@@ -3368,6 +3634,7 @@ export interface PreimageCreateOneWithoutMotionInput {
 
 export interface PreimageCreateWithoutMotionInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   author: String;
   depositAmount: String;
   hash: String;
@@ -3386,6 +3653,7 @@ export interface ProposalCreateOneWithoutPreimageInput {
 }
 
 export interface ProposalCreateWithoutPreimageInput {
+  network?: Maybe<String>;
   author: String;
   depositAmount: String;
   preimageHash: String;
@@ -3448,6 +3716,7 @@ export interface ReferendumCreateOneWithoutPreimageInput {
 }
 
 export interface ReferendumCreateWithoutPreimageInput {
+  network?: Maybe<String>;
   delay: Int;
   end: Int;
   preimageHash: String;
@@ -3479,6 +3748,7 @@ export interface TreasurySpendProposalCreateOneWithoutMotionInput {
 }
 
 export interface TreasurySpendProposalCreateWithoutMotionInput {
+  network?: Maybe<String>;
   proposer: String;
   beneficiary: String;
   value: String;
@@ -3507,6 +3777,7 @@ export interface TreasuryStatusCreateWithoutTreasurySpendProposalInput {
 }
 
 export interface MotionUpdateInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   memberCount?: Maybe<Int>;
   metaDescription?: Maybe<String>;
@@ -3762,6 +4033,7 @@ export interface PreimageUpdateOneWithoutMotionInput {
 }
 
 export interface PreimageUpdateWithoutMotionDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   hash?: Maybe<String>;
@@ -3784,6 +4056,7 @@ export interface ProposalUpdateOneWithoutPreimageInput {
 }
 
 export interface ProposalUpdateWithoutPreimageDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   preimageHash?: Maybe<String>;
@@ -4130,6 +4403,7 @@ export interface ReferendumUpdateOneWithoutPreimageInput {
 }
 
 export interface ReferendumUpdateWithoutPreimageDataInput {
+  network?: Maybe<String>;
   delay?: Maybe<Int>;
   end?: Maybe<Int>;
   preimageHash?: Maybe<String>;
@@ -4273,6 +4547,7 @@ export interface TreasurySpendProposalUpdateOneWithoutMotionInput {
 }
 
 export interface TreasurySpendProposalUpdateWithoutMotionDataInput {
+  network?: Maybe<String>;
   proposer?: Maybe<String>;
   beneficiary?: Maybe<String>;
   value?: Maybe<String>;
@@ -4402,6 +4677,7 @@ export interface TreasurySpendProposalUpsertWithoutMotionInput {
 }
 
 export interface MotionUpdateManyMutationInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   memberCount?: Maybe<Int>;
   metaDescription?: Maybe<String>;
@@ -4425,6 +4701,7 @@ export interface MotionCreateOneWithoutMotionProposalArgumentsInput {
 }
 
 export interface MotionCreateWithoutMotionProposalArgumentsInput {
+  network?: Maybe<String>;
   author: String;
   memberCount: Int;
   metaDescription: String;
@@ -4454,6 +4731,7 @@ export interface MotionUpdateOneRequiredWithoutMotionProposalArgumentsInput {
 }
 
 export interface MotionUpdateWithoutMotionProposalArgumentsDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   memberCount?: Maybe<Int>;
   metaDescription?: Maybe<String>;
@@ -4493,6 +4771,7 @@ export interface MotionCreateOneWithoutMotionStatusInput {
 }
 
 export interface MotionCreateWithoutMotionStatusInput {
+  network?: Maybe<String>;
   author: String;
   memberCount: Int;
   metaDescription: String;
@@ -4525,6 +4804,7 @@ export interface MotionUpdateOneRequiredWithoutMotionStatusInput {
 }
 
 export interface MotionUpdateWithoutMotionStatusDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   memberCount?: Maybe<Int>;
   metaDescription?: Maybe<String>;
@@ -4554,6 +4834,7 @@ export interface MotionStatusUpdateManyMutationInput {
 
 export interface PreimageCreateInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   author: String;
   depositAmount: String;
   hash: String;
@@ -4573,6 +4854,7 @@ export interface MotionCreateOneWithoutPreimageInput {
 }
 
 export interface MotionCreateWithoutPreimageInput {
+  network?: Maybe<String>;
   author: String;
   memberCount: Int;
   metaDescription: String;
@@ -4591,6 +4873,7 @@ export interface MotionCreateWithoutPreimageInput {
 }
 
 export interface PreimageUpdateInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   hash?: Maybe<String>;
@@ -4614,6 +4897,7 @@ export interface MotionUpdateOneWithoutPreimageInput {
 }
 
 export interface MotionUpdateWithoutPreimageDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   memberCount?: Maybe<Int>;
   metaDescription?: Maybe<String>;
@@ -4637,6 +4921,7 @@ export interface MotionUpsertWithoutPreimageInput {
 }
 
 export interface PreimageUpdateManyMutationInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   hash?: Maybe<String>;
@@ -4659,6 +4944,7 @@ export interface PreimageCreateOneWithoutPreimageArgumentsInput {
 
 export interface PreimageCreateWithoutPreimageArgumentsInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   author: String;
   depositAmount: String;
   hash: String;
@@ -4685,6 +4971,7 @@ export interface PreimageUpdateOneRequiredWithoutPreimageArgumentsInput {
 }
 
 export interface PreimageUpdateWithoutPreimageArgumentsDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   hash?: Maybe<String>;
@@ -4721,6 +5008,7 @@ export interface PreimageCreateOneWithoutPreimageStatusInput {
 
 export interface PreimageCreateWithoutPreimageStatusInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   author: String;
   depositAmount: String;
   hash: String;
@@ -4747,6 +5035,7 @@ export interface PreimageUpdateOneRequiredWithoutPreimageStatusInput {
 }
 
 export interface PreimageUpdateWithoutPreimageStatusDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   hash?: Maybe<String>;
@@ -4769,6 +5058,7 @@ export interface PreimageStatusUpdateManyMutationInput {
 }
 
 export interface ProposalCreateInput {
+  network?: Maybe<String>;
   author: String;
   depositAmount: String;
   preimage?: Maybe<PreimageCreateOneWithoutProposalInput>;
@@ -4784,6 +5074,7 @@ export interface PreimageCreateOneWithoutProposalInput {
 
 export interface PreimageCreateWithoutProposalInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   author: String;
   depositAmount: String;
   hash: String;
@@ -4797,6 +5088,7 @@ export interface PreimageCreateWithoutProposalInput {
 }
 
 export interface ProposalUpdateInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   preimage?: Maybe<PreimageUpdateOneWithoutProposalInput>;
@@ -4815,6 +5107,7 @@ export interface PreimageUpdateOneWithoutProposalInput {
 }
 
 export interface PreimageUpdateWithoutProposalDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   hash?: Maybe<String>;
@@ -4833,6 +5126,7 @@ export interface PreimageUpsertWithoutProposalInput {
 }
 
 export interface ProposalUpdateManyMutationInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   preimageHash?: Maybe<String>;
@@ -4853,6 +5147,7 @@ export interface ProposalCreateOneWithoutProposalStatusInput {
 }
 
 export interface ProposalCreateWithoutProposalStatusInput {
+  network?: Maybe<String>;
   author: String;
   depositAmount: String;
   preimage?: Maybe<PreimageCreateOneWithoutProposalInput>;
@@ -4875,6 +5170,7 @@ export interface ProposalUpdateOneRequiredWithoutProposalStatusInput {
 }
 
 export interface ProposalUpdateWithoutProposalStatusDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   preimage?: Maybe<PreimageUpdateOneWithoutProposalInput>;
@@ -4893,6 +5189,7 @@ export interface ProposalStatusUpdateManyMutationInput {
 }
 
 export interface ReferendumCreateInput {
+  network?: Maybe<String>;
   delay: Int;
   end: Int;
   preimage?: Maybe<PreimageCreateOneWithoutReferendumInput>;
@@ -4909,6 +5206,7 @@ export interface PreimageCreateOneWithoutReferendumInput {
 
 export interface PreimageCreateWithoutReferendumInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   author: String;
   depositAmount: String;
   hash: String;
@@ -4922,6 +5220,7 @@ export interface PreimageCreateWithoutReferendumInput {
 }
 
 export interface ReferendumUpdateInput {
+  network?: Maybe<String>;
   delay?: Maybe<Int>;
   end?: Maybe<Int>;
   preimage?: Maybe<PreimageUpdateOneWithoutReferendumInput>;
@@ -4941,6 +5240,7 @@ export interface PreimageUpdateOneWithoutReferendumInput {
 }
 
 export interface PreimageUpdateWithoutReferendumDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   depositAmount?: Maybe<String>;
   hash?: Maybe<String>;
@@ -4959,6 +5259,7 @@ export interface PreimageUpsertWithoutReferendumInput {
 }
 
 export interface ReferendumUpdateManyMutationInput {
+  network?: Maybe<String>;
   delay?: Maybe<Int>;
   end?: Maybe<Int>;
   preimageHash?: Maybe<String>;
@@ -4980,6 +5281,7 @@ export interface ReferendumCreateOneWithoutReferendumStatusInput {
 }
 
 export interface ReferendumCreateWithoutReferendumStatusInput {
+  network?: Maybe<String>;
   delay: Int;
   end: Int;
   preimage?: Maybe<PreimageCreateOneWithoutReferendumInput>;
@@ -5003,6 +5305,7 @@ export interface ReferendumUpdateOneRequiredWithoutReferendumStatusInput {
 }
 
 export interface ReferendumUpdateWithoutReferendumStatusDataInput {
+  network?: Maybe<String>;
   delay?: Maybe<Int>;
   end?: Maybe<Int>;
   preimage?: Maybe<PreimageUpdateOneWithoutReferendumInput>;
@@ -5022,6 +5325,7 @@ export interface ReferendumStatusUpdateManyMutationInput {
 }
 
 export interface TipCreateInput {
+  network?: Maybe<String>;
   hash: String;
   reason: String;
   who: String;
@@ -5046,6 +5350,7 @@ export interface TipStatusCreateWithoutTipInput {
 }
 
 export interface TipUpdateInput {
+  network?: Maybe<String>;
   hash?: Maybe<String>;
   reason?: Maybe<String>;
   who?: Maybe<String>;
@@ -5154,6 +5459,7 @@ export interface TipStatusUpdateManyDataInput {
 }
 
 export interface TipUpdateManyMutationInput {
+  network?: Maybe<String>;
   hash?: Maybe<String>;
   reason?: Maybe<String>;
   who?: Maybe<String>;
@@ -5176,6 +5482,7 @@ export interface TipCreateOneWithoutTipStatusInput {
 }
 
 export interface TipCreateWithoutTipStatusInput {
+  network?: Maybe<String>;
   hash: String;
   reason: String;
   who: String;
@@ -5199,6 +5506,7 @@ export interface TipUpdateOneRequiredWithoutTipStatusInput {
 }
 
 export interface TipUpdateWithoutTipStatusDataInput {
+  network?: Maybe<String>;
   hash?: Maybe<String>;
   reason?: Maybe<String>;
   who?: Maybe<String>;
@@ -5218,6 +5526,7 @@ export interface TipStatusUpdateManyMutationInput {
 }
 
 export interface TreasurySpendProposalCreateInput {
+  network?: Maybe<String>;
   proposer: String;
   beneficiary: String;
   value: String;
@@ -5235,6 +5544,7 @@ export interface MotionCreateOneWithoutTreasurySpendProposalInput {
 }
 
 export interface MotionCreateWithoutTreasurySpendProposalInput {
+  network?: Maybe<String>;
   author: String;
   memberCount: Int;
   metaDescription: String;
@@ -5251,6 +5561,7 @@ export interface MotionCreateWithoutTreasurySpendProposalInput {
 }
 
 export interface TreasurySpendProposalUpdateInput {
+  network?: Maybe<String>;
   proposer?: Maybe<String>;
   beneficiary?: Maybe<String>;
   value?: Maybe<String>;
@@ -5272,6 +5583,7 @@ export interface MotionUpdateOneWithoutTreasurySpendProposalInput {
 }
 
 export interface MotionUpdateWithoutTreasurySpendProposalDataInput {
+  network?: Maybe<String>;
   author?: Maybe<String>;
   memberCount?: Maybe<Int>;
   metaDescription?: Maybe<String>;
@@ -5293,6 +5605,7 @@ export interface MotionUpsertWithoutTreasurySpendProposalInput {
 }
 
 export interface TreasurySpendProposalUpdateManyMutationInput {
+  network?: Maybe<String>;
   proposer?: Maybe<String>;
   beneficiary?: Maybe<String>;
   value?: Maybe<String>;
@@ -5314,6 +5627,7 @@ export interface TreasurySpendProposalCreateOneWithoutTreasuryStatusInput {
 }
 
 export interface TreasurySpendProposalCreateWithoutTreasuryStatusInput {
+  network?: Maybe<String>;
   proposer: String;
   beneficiary: String;
   value: String;
@@ -5339,6 +5653,7 @@ export interface TreasurySpendProposalUpdateOneRequiredWithoutTreasuryStatusInpu
 }
 
 export interface TreasurySpendProposalUpdateWithoutTreasuryStatusDataInput {
+  network?: Maybe<String>;
   proposer?: Maybe<String>;
   beneficiary?: Maybe<String>;
   value?: Maybe<String>;
@@ -5359,6 +5674,7 @@ export interface TreasuryStatusUpdateManyMutationInput {
 
 export interface VoteCreateInput {
   id?: Maybe<ID_Input>;
+  network?: Maybe<String>;
   proposalType?: Maybe<String>;
   proposalId?: Maybe<Int>;
   address?: Maybe<String>;
@@ -5369,6 +5685,7 @@ export interface VoteCreateInput {
 }
 
 export interface VoteUpdateInput {
+  network?: Maybe<String>;
   proposalType?: Maybe<String>;
   proposalId?: Maybe<Int>;
   address?: Maybe<String>;
@@ -5379,6 +5696,7 @@ export interface VoteUpdateInput {
 }
 
 export interface VoteUpdateManyMutationInput {
+  network?: Maybe<String>;
   proposalType?: Maybe<String>;
   proposalId?: Maybe<Int>;
   address?: Maybe<String>;
@@ -5749,6 +6067,7 @@ export interface NodeNode {
 
 export interface Account {
   id: ID_Output;
+  network?: String;
   address?: String;
   balance?: String;
   display?: String;
@@ -5756,6 +6075,7 @@ export interface Account {
 
 export interface AccountPromise extends Promise<Account>, Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   address: () => Promise<String>;
   balance: () => Promise<String>;
   display: () => Promise<String>;
@@ -5765,6 +6085,7 @@ export interface AccountSubscription
   extends Promise<AsyncIterator<Account>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
   balance: () => Promise<AsyncIterator<String>>;
   display: () => Promise<AsyncIterator<String>>;
@@ -5774,6 +6095,7 @@ export interface AccountNullablePromise
   extends Promise<Account | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   address: () => Promise<String>;
   balance: () => Promise<String>;
   display: () => Promise<String>;
@@ -5946,6 +6268,7 @@ export interface AggregateBlockIndexSubscription
 
 export interface BlockNumber {
   id: ID_Output;
+  network?: String;
   number: Int;
   authoredBy: String;
   startDateTime: DateTimeOutput;
@@ -5954,6 +6277,7 @@ export interface BlockNumber {
 
 export interface BlockNumberPromise extends Promise<BlockNumber>, Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   number: () => Promise<Int>;
   authoredBy: () => Promise<String>;
   startDateTime: () => Promise<DateTimeOutput>;
@@ -5964,6 +6288,7 @@ export interface BlockNumberSubscription
   extends Promise<AsyncIterator<BlockNumber>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   number: () => Promise<AsyncIterator<Int>>;
   authoredBy: () => Promise<AsyncIterator<String>>;
   startDateTime: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -5974,6 +6299,7 @@ export interface BlockNumberNullablePromise
   extends Promise<BlockNumber | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   number: () => Promise<Int>;
   authoredBy: () => Promise<String>;
   startDateTime: () => Promise<DateTimeOutput>;
@@ -6038,6 +6364,7 @@ export interface AggregateBlockNumberSubscription
 
 export interface Bounty {
   id: Int;
+  network?: String;
   proposer: String;
   value: String;
   fee?: String;
@@ -6050,6 +6377,7 @@ export interface Bounty {
 
 export interface BountyPromise extends Promise<Bounty>, Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   proposer: () => Promise<String>;
   value: () => Promise<String>;
   fee: () => Promise<String>;
@@ -6073,6 +6401,7 @@ export interface BountySubscription
   extends Promise<AsyncIterator<Bounty>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   proposer: () => Promise<AsyncIterator<String>>;
   value: () => Promise<AsyncIterator<String>>;
   fee: () => Promise<AsyncIterator<String>>;
@@ -6096,6 +6425,7 @@ export interface BountyNullablePromise
   extends Promise<Bounty | null>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   proposer: () => Promise<String>;
   value: () => Promise<String>;
   fee: () => Promise<String>;
@@ -6263,10 +6593,12 @@ export interface AggregateBountyStatusSubscription
 
 export interface Council {
   id: ID_Output;
+  network?: String;
 }
 
 export interface CouncilPromise extends Promise<Council>, Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   blockNumber: <T = BlockNumberPromise>() => T;
   members: <T = FragmentableArray<CouncilMember>>(args?: {
     where?: CouncilMemberWhereInput;
@@ -6283,6 +6615,7 @@ export interface CouncilSubscription
   extends Promise<AsyncIterator<Council>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   blockNumber: <T = BlockNumberSubscription>() => T;
   members: <T = Promise<AsyncIterator<CouncilMemberSubscription>>>(args?: {
     where?: CouncilMemberWhereInput;
@@ -6299,6 +6632,7 @@ export interface CouncilNullablePromise
   extends Promise<Council | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   blockNumber: <T = BlockNumberPromise>() => T;
   members: <T = FragmentableArray<CouncilMember>>(args?: {
     where?: CouncilMemberWhereInput;
@@ -6313,6 +6647,7 @@ export interface CouncilNullablePromise
 
 export interface CouncilMember {
   id: ID_Output;
+  network?: String;
   address: String;
 }
 
@@ -6320,6 +6655,7 @@ export interface CouncilMemberPromise
   extends Promise<CouncilMember>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   address: () => Promise<String>;
   councils: <T = FragmentableArray<Council>>(args?: {
     where?: CouncilWhereInput;
@@ -6336,6 +6672,7 @@ export interface CouncilMemberSubscription
   extends Promise<AsyncIterator<CouncilMember>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
   councils: <T = Promise<AsyncIterator<CouncilSubscription>>>(args?: {
     where?: CouncilWhereInput;
@@ -6352,6 +6689,7 @@ export interface CouncilMemberNullablePromise
   extends Promise<CouncilMember | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   address: () => Promise<String>;
   councils: <T = FragmentableArray<Council>>(args?: {
     where?: CouncilWhereInput;
@@ -6476,6 +6814,7 @@ export interface AggregateCouncilMemberSubscription
 
 export interface Motion {
   id: Int;
+  network?: String;
   author: String;
   memberCount: Int;
   metaDescription: String;
@@ -6488,6 +6827,7 @@ export interface Motion {
 
 export interface MotionPromise extends Promise<Motion>, Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   author: () => Promise<String>;
   memberCount: () => Promise<Int>;
   metaDescription: () => Promise<String>;
@@ -6524,6 +6864,7 @@ export interface MotionSubscription
   extends Promise<AsyncIterator<Motion>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   author: () => Promise<AsyncIterator<String>>;
   memberCount: () => Promise<AsyncIterator<Int>>;
   metaDescription: () => Promise<AsyncIterator<String>>;
@@ -6560,6 +6901,7 @@ export interface MotionNullablePromise
   extends Promise<Motion | null>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   author: () => Promise<String>;
   memberCount: () => Promise<Int>;
   metaDescription: () => Promise<String>;
@@ -6663,6 +7005,7 @@ export interface MotionStatusNullablePromise
 
 export interface Preimage {
   id: ID_Output;
+  network?: String;
   author: String;
   depositAmount: String;
   hash: String;
@@ -6673,6 +7016,7 @@ export interface Preimage {
 
 export interface PreimagePromise extends Promise<Preimage>, Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   author: () => Promise<String>;
   depositAmount: () => Promise<String>;
   hash: () => Promise<String>;
@@ -6706,6 +7050,7 @@ export interface PreimageSubscription
   extends Promise<AsyncIterator<Preimage>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   author: () => Promise<AsyncIterator<String>>;
   depositAmount: () => Promise<AsyncIterator<String>>;
   hash: () => Promise<AsyncIterator<String>>;
@@ -6743,6 +7088,7 @@ export interface PreimageNullablePromise
   extends Promise<Preimage | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   author: () => Promise<String>;
   depositAmount: () => Promise<String>;
   hash: () => Promise<String>;
@@ -6774,6 +7120,7 @@ export interface PreimageNullablePromise
 
 export interface Proposal {
   id: Int;
+  network?: String;
   author: String;
   depositAmount: String;
   preimageHash: String;
@@ -6782,6 +7129,7 @@ export interface Proposal {
 
 export interface ProposalPromise extends Promise<Proposal>, Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   author: () => Promise<String>;
   depositAmount: () => Promise<String>;
   preimage: <T = PreimagePromise>() => T;
@@ -6802,6 +7150,7 @@ export interface ProposalSubscription
   extends Promise<AsyncIterator<Proposal>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   author: () => Promise<AsyncIterator<String>>;
   depositAmount: () => Promise<AsyncIterator<String>>;
   preimage: <T = PreimageSubscription>() => T;
@@ -6824,6 +7173,7 @@ export interface ProposalNullablePromise
   extends Promise<Proposal | null>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   author: () => Promise<String>;
   depositAmount: () => Promise<String>;
   preimage: <T = PreimagePromise>() => T;
@@ -6943,6 +7293,7 @@ export interface PreimageStatusNullablePromise
 
 export interface Referendum {
   id: Int;
+  network?: String;
   delay: Int;
   end: Int;
   preimageHash: String;
@@ -6952,6 +7303,7 @@ export interface Referendum {
 
 export interface ReferendumPromise extends Promise<Referendum>, Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   delay: () => Promise<Int>;
   end: () => Promise<Int>;
   preimage: <T = PreimagePromise>() => T;
@@ -6973,6 +7325,7 @@ export interface ReferendumSubscription
   extends Promise<AsyncIterator<Referendum>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   delay: () => Promise<AsyncIterator<Int>>;
   end: () => Promise<AsyncIterator<Int>>;
   preimage: <T = PreimageSubscription>() => T;
@@ -6996,6 +7349,7 @@ export interface ReferendumNullablePromise
   extends Promise<Referendum | null>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   delay: () => Promise<Int>;
   end: () => Promise<Int>;
   preimage: <T = PreimagePromise>() => T;
@@ -7051,6 +7405,7 @@ export interface ReferendumStatusNullablePromise
 
 export interface TreasurySpendProposal {
   id: Int;
+  network?: String;
   proposer: String;
   beneficiary: String;
   value: String;
@@ -7062,6 +7417,7 @@ export interface TreasurySpendProposalPromise
   extends Promise<TreasurySpendProposal>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   proposer: () => Promise<String>;
   beneficiary: () => Promise<String>;
   value: () => Promise<String>;
@@ -7083,6 +7439,7 @@ export interface TreasurySpendProposalSubscription
   extends Promise<AsyncIterator<TreasurySpendProposal>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   proposer: () => Promise<AsyncIterator<String>>;
   beneficiary: () => Promise<AsyncIterator<String>>;
   value: () => Promise<AsyncIterator<String>>;
@@ -7106,6 +7463,7 @@ export interface TreasurySpendProposalNullablePromise
   extends Promise<TreasurySpendProposal | null>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   proposer: () => Promise<String>;
   beneficiary: () => Promise<String>;
   value: () => Promise<String>;
@@ -7721,6 +8079,7 @@ export interface AggregateReferendumStatusSubscription
 
 export interface Tip {
   id: Int;
+  network?: String;
   hash: String;
   reason: String;
   who: String;
@@ -7731,6 +8090,7 @@ export interface Tip {
 
 export interface TipPromise extends Promise<Tip>, Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   hash: () => Promise<String>;
   reason: () => Promise<String>;
   who: () => Promise<String>;
@@ -7752,6 +8112,7 @@ export interface TipSubscription
   extends Promise<AsyncIterator<Tip>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   hash: () => Promise<AsyncIterator<String>>;
   reason: () => Promise<AsyncIterator<String>>;
   who: () => Promise<AsyncIterator<String>>;
@@ -7771,6 +8132,7 @@ export interface TipSubscription
 
 export interface TipNullablePromise extends Promise<Tip | null>, Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   hash: () => Promise<String>;
   reason: () => Promise<String>;
   who: () => Promise<String>;
@@ -8048,6 +8410,7 @@ export interface AggregateTreasuryStatusSubscription
 
 export interface Vote {
   id: ID_Output;
+  network?: String;
   proposalType?: String;
   proposalId?: Int;
   address?: String;
@@ -8059,6 +8422,7 @@ export interface Vote {
 
 export interface VotePromise extends Promise<Vote>, Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   proposalType: () => Promise<String>;
   proposalId: () => Promise<Int>;
   address: () => Promise<String>;
@@ -8072,6 +8436,7 @@ export interface VoteSubscription
   extends Promise<AsyncIterator<Vote>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   proposalType: () => Promise<AsyncIterator<String>>;
   proposalId: () => Promise<AsyncIterator<Int>>;
   address: () => Promise<AsyncIterator<String>>;
@@ -8085,6 +8450,7 @@ export interface VoteNullablePromise
   extends Promise<Vote | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   proposalType: () => Promise<String>;
   proposalId: () => Promise<Int>;
   address: () => Promise<String>;
@@ -8191,6 +8557,7 @@ export interface AccountSubscriptionPayloadSubscription
 
 export interface AccountPreviousValues {
   id: ID_Output;
+  network?: String;
   address?: String;
   balance?: String;
   display?: String;
@@ -8200,6 +8567,7 @@ export interface AccountPreviousValuesPromise
   extends Promise<AccountPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   address: () => Promise<String>;
   balance: () => Promise<String>;
   display: () => Promise<String>;
@@ -8209,6 +8577,7 @@ export interface AccountPreviousValuesSubscription
   extends Promise<AsyncIterator<AccountPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
   balance: () => Promise<AsyncIterator<String>>;
   display: () => Promise<AsyncIterator<String>>;
@@ -8291,6 +8660,7 @@ export interface BlockNumberSubscriptionPayloadSubscription
 
 export interface BlockNumberPreviousValues {
   id: ID_Output;
+  network?: String;
   number: Int;
   authoredBy: String;
   startDateTime: DateTimeOutput;
@@ -8301,6 +8671,7 @@ export interface BlockNumberPreviousValuesPromise
   extends Promise<BlockNumberPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   number: () => Promise<Int>;
   authoredBy: () => Promise<String>;
   startDateTime: () => Promise<DateTimeOutput>;
@@ -8311,6 +8682,7 @@ export interface BlockNumberPreviousValuesSubscription
   extends Promise<AsyncIterator<BlockNumberPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   number: () => Promise<AsyncIterator<Int>>;
   authoredBy: () => Promise<AsyncIterator<String>>;
   startDateTime: () => Promise<AsyncIterator<DateTimeOutput>>;
@@ -8344,6 +8716,7 @@ export interface BountySubscriptionPayloadSubscription
 
 export interface BountyPreviousValues {
   id: Int;
+  network?: String;
   proposer: String;
   value: String;
   fee?: String;
@@ -8358,6 +8731,7 @@ export interface BountyPreviousValuesPromise
   extends Promise<BountyPreviousValues>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   proposer: () => Promise<String>;
   value: () => Promise<String>;
   fee: () => Promise<String>;
@@ -8372,6 +8746,7 @@ export interface BountyPreviousValuesSubscription
   extends Promise<AsyncIterator<BountyPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   proposer: () => Promise<AsyncIterator<String>>;
   value: () => Promise<AsyncIterator<String>>;
   fee: () => Promise<AsyncIterator<String>>;
@@ -8456,18 +8831,21 @@ export interface CouncilSubscriptionPayloadSubscription
 
 export interface CouncilPreviousValues {
   id: ID_Output;
+  network?: String;
 }
 
 export interface CouncilPreviousValuesPromise
   extends Promise<CouncilPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
 }
 
 export interface CouncilPreviousValuesSubscription
   extends Promise<AsyncIterator<CouncilPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
 }
 
 export interface CouncilMemberSubscriptionPayload {
@@ -8497,6 +8875,7 @@ export interface CouncilMemberSubscriptionPayloadSubscription
 
 export interface CouncilMemberPreviousValues {
   id: ID_Output;
+  network?: String;
   address: String;
 }
 
@@ -8504,6 +8883,7 @@ export interface CouncilMemberPreviousValuesPromise
   extends Promise<CouncilMemberPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   address: () => Promise<String>;
 }
 
@@ -8511,6 +8891,7 @@ export interface CouncilMemberPreviousValuesSubscription
   extends Promise<AsyncIterator<CouncilMemberPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   address: () => Promise<AsyncIterator<String>>;
 }
 
@@ -8541,6 +8922,7 @@ export interface MotionSubscriptionPayloadSubscription
 
 export interface MotionPreviousValues {
   id: Int;
+  network?: String;
   author: String;
   memberCount: Int;
   metaDescription: String;
@@ -8555,6 +8937,7 @@ export interface MotionPreviousValuesPromise
   extends Promise<MotionPreviousValues>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   author: () => Promise<String>;
   memberCount: () => Promise<Int>;
   metaDescription: () => Promise<String>;
@@ -8569,6 +8952,7 @@ export interface MotionPreviousValuesSubscription
   extends Promise<AsyncIterator<MotionPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   author: () => Promise<AsyncIterator<String>>;
   memberCount: () => Promise<AsyncIterator<Int>>;
   metaDescription: () => Promise<AsyncIterator<String>>;
@@ -8700,6 +9084,7 @@ export interface PreimageSubscriptionPayloadSubscription
 
 export interface PreimagePreviousValues {
   id: ID_Output;
+  network?: String;
   author: String;
   depositAmount: String;
   hash: String;
@@ -8712,6 +9097,7 @@ export interface PreimagePreviousValuesPromise
   extends Promise<PreimagePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   author: () => Promise<String>;
   depositAmount: () => Promise<String>;
   hash: () => Promise<String>;
@@ -8724,6 +9110,7 @@ export interface PreimagePreviousValuesSubscription
   extends Promise<AsyncIterator<PreimagePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   author: () => Promise<AsyncIterator<String>>;
   depositAmount: () => Promise<AsyncIterator<String>>;
   hash: () => Promise<AsyncIterator<String>>;
@@ -8850,6 +9237,7 @@ export interface ProposalSubscriptionPayloadSubscription
 
 export interface ProposalPreviousValues {
   id: Int;
+  network?: String;
   author: String;
   depositAmount: String;
   preimageHash: String;
@@ -8860,6 +9248,7 @@ export interface ProposalPreviousValuesPromise
   extends Promise<ProposalPreviousValues>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   author: () => Promise<String>;
   depositAmount: () => Promise<String>;
   preimageHash: () => Promise<String>;
@@ -8870,6 +9259,7 @@ export interface ProposalPreviousValuesSubscription
   extends Promise<AsyncIterator<ProposalPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   author: () => Promise<AsyncIterator<String>>;
   depositAmount: () => Promise<AsyncIterator<String>>;
   preimageHash: () => Promise<AsyncIterator<String>>;
@@ -8950,6 +9340,7 @@ export interface ReferendumSubscriptionPayloadSubscription
 
 export interface ReferendumPreviousValues {
   id: Int;
+  network?: String;
   delay: Int;
   end: Int;
   preimageHash: String;
@@ -8961,6 +9352,7 @@ export interface ReferendumPreviousValuesPromise
   extends Promise<ReferendumPreviousValues>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   delay: () => Promise<Int>;
   end: () => Promise<Int>;
   preimageHash: () => Promise<String>;
@@ -8972,6 +9364,7 @@ export interface ReferendumPreviousValuesSubscription
   extends Promise<AsyncIterator<ReferendumPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   delay: () => Promise<AsyncIterator<Int>>;
   end: () => Promise<AsyncIterator<Int>>;
   preimageHash: () => Promise<AsyncIterator<String>>;
@@ -9053,6 +9446,7 @@ export interface TipSubscriptionPayloadSubscription
 
 export interface TipPreviousValues {
   id: Int;
+  network?: String;
   hash: String;
   reason: String;
   who: String;
@@ -9065,6 +9459,7 @@ export interface TipPreviousValuesPromise
   extends Promise<TipPreviousValues>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   hash: () => Promise<String>;
   reason: () => Promise<String>;
   who: () => Promise<String>;
@@ -9077,6 +9472,7 @@ export interface TipPreviousValuesSubscription
   extends Promise<AsyncIterator<TipPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   hash: () => Promise<AsyncIterator<String>>;
   reason: () => Promise<AsyncIterator<String>>;
   who: () => Promise<AsyncIterator<String>>;
@@ -9159,6 +9555,7 @@ export interface TreasurySpendProposalSubscriptionPayloadSubscription
 
 export interface TreasurySpendProposalPreviousValues {
   id: Int;
+  network?: String;
   proposer: String;
   beneficiary: String;
   value: String;
@@ -9170,6 +9567,7 @@ export interface TreasurySpendProposalPreviousValuesPromise
   extends Promise<TreasurySpendProposalPreviousValues>,
     Fragmentable {
   id: () => Promise<Int>;
+  network: () => Promise<String>;
   proposer: () => Promise<String>;
   beneficiary: () => Promise<String>;
   value: () => Promise<String>;
@@ -9181,6 +9579,7 @@ export interface TreasurySpendProposalPreviousValuesSubscription
   extends Promise<AsyncIterator<TreasurySpendProposalPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<Int>>;
+  network: () => Promise<AsyncIterator<String>>;
   proposer: () => Promise<AsyncIterator<String>>;
   beneficiary: () => Promise<AsyncIterator<String>>;
   value: () => Promise<AsyncIterator<String>>;
@@ -9262,6 +9661,7 @@ export interface VoteSubscriptionPayloadSubscription
 
 export interface VotePreviousValues {
   id: ID_Output;
+  network?: String;
   proposalType?: String;
   proposalId?: Int;
   address?: String;
@@ -9275,6 +9675,7 @@ export interface VotePreviousValuesPromise
   extends Promise<VotePreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  network: () => Promise<String>;
   proposalType: () => Promise<String>;
   proposalId: () => Promise<Int>;
   address: () => Promise<String>;
@@ -9288,6 +9689,7 @@ export interface VotePreviousValuesSubscription
   extends Promise<AsyncIterator<VotePreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  network: () => Promise<AsyncIterator<String>>;
   proposalType: () => Promise<AsyncIterator<String>>;
   proposalId: () => Promise<AsyncIterator<Int>>;
   address: () => Promise<AsyncIterator<String>>;

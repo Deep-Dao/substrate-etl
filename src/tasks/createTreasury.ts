@@ -20,6 +20,7 @@ import {
 } from './types';
 
 const l = logger('Task: Treasury');
+const network = process.env.NETWORK;
 
 /*
  *  ======= Table (Treasury) ======
@@ -106,6 +107,7 @@ const createTreasury: Task<NomidotTreasury[]> = {
         } = prop;
 
         await prisma.createTreasurySpendProposal({
+          network,
           proposer: proposer.toString(),
           treasuryProposalId,
           beneficiary: beneficiary.toString(),

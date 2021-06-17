@@ -28,6 +28,7 @@ type PreimageInfo = [Bytes, AccountId, Balance, BlockNumber];
 type OldPreimage = ITuple<PreimageInfo>;
 
 const l = logger('Task: Preimage');
+const network = process.env.NETWORK;
 
 const isCurrentPreimage = function(
   api: ApiPromise,
@@ -210,6 +211,7 @@ const createPreimage: Task<NomidotPreimage[]> = {
         const r = referenda[0];
 
         await prisma.createPreimage({
+          network,
           author: author.toString(),
           depositAmount: depositAmount.toString(),
           hash: h.toString(),

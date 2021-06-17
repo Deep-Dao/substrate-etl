@@ -19,12 +19,12 @@ const START_FROM = envVars.START_FROM;
 const l = logger('node-watcher');
 
 function waitFinalized(
-  api: ApiPromise,
+  api: any,
   lastKnownBestFinalized: number
 ): Promise<{ unsub: () => void; bestFinalizedBlock: number }> {
   return new Promise(resolve => {
     async function wait(): Promise<void> {
-      const unsub = await api.derive.chain.bestNumberFinalized(best => {
+      const unsub = await api.derive.chain.bestNumberFinalized((best: any) => {
         if (best.toNumber() > lastKnownBestFinalized) {
           resolve({ unsub, bestFinalizedBlock: best.toNumber() });
         }
@@ -43,12 +43,12 @@ function reachedLimitLag(
 }
 
 function waitLagLimit(
-  api: ApiPromise,
+  api: any,
   blockIndex: number
 ): Promise<{ unsub: () => void; bestBlock: number }> {
   return new Promise(resolve => {
     async function wait(): Promise<void> {
-      const unsub = await api.derive.chain.bestNumber(bestBlock => {
+      const unsub = await api.derive.chain.bestNumber((bestBlock: any) => {
         if (reachedLimitLag(blockIndex, bestBlock.toNumber())) {
           resolve({ unsub, bestBlock: bestBlock.toNumber() });
         }
