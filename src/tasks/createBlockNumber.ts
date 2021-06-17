@@ -9,6 +9,7 @@ import { BlockNumberCreateInput, prisma } from '../generated/prisma-client';
 import { Cached, NomidotBlock, Task } from './types';
 
 const l = logger('Task: BlockNumber');
+const network = process.env.NETWORK;
 
 /*
  *  ======= Table (BlockNumber) ======
@@ -55,6 +56,7 @@ const createBlockNumber: Task<NomidotBlock> = {
 
     if (!exists) {
       const write = await prisma.createBlockNumber({
+        network,
         number: blockNumber.toNumber(),
         authoredBy: authoredBy.toString(),
         startDateTime: new Date(startDateTime.toNumber()).toISOString(),

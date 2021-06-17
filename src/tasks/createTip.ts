@@ -19,6 +19,7 @@ import {
 } from './types';
 
 const l = logger('Task: Tip');
+const network = process.env.NETWORK;
 
 /*
  *  ======= Table (Tip) ======
@@ -132,6 +133,7 @@ const createTip: Task<NomidotTip[]> = {
         } = prop;
 
         await prisma.createTip({
+          network,
           hash: hash,
           reason,
           who: who.toString(),

@@ -4,6 +4,7 @@
 
 export const typeDefs = /* GraphQL */ `type Account {
   id: ID!
+  network: String
   address: String
   balance: String
   display: String
@@ -17,6 +18,7 @@ type AccountConnection {
 
 input AccountCreateInput {
   id: ID
+  network: String
   address: String
   balance: String
   display: String
@@ -30,6 +32,8 @@ type AccountEdge {
 enum AccountOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   address_ASC
   address_DESC
   balance_ASC
@@ -40,6 +44,7 @@ enum AccountOrderByInput {
 
 type AccountPreviousValues {
   id: ID!
+  network: String
   address: String
   balance: String
   display: String
@@ -64,12 +69,14 @@ input AccountSubscriptionWhereInput {
 }
 
 input AccountUpdateInput {
+  network: String
   address: String
   balance: String
   display: String
 }
 
 input AccountUpdateManyMutationInput {
+  network: String
   address: String
   balance: String
   display: String
@@ -90,6 +97,20 @@ input AccountWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   address: String
   address_not: String
   address_in: [String!]
@@ -363,6 +384,7 @@ input BlockIndexWhereUniqueInput {
 
 type BlockNumber {
   id: ID!
+  network: String
   number: Int!
   authoredBy: String!
   startDateTime: DateTime!
@@ -377,6 +399,7 @@ type BlockNumberConnection {
 
 input BlockNumberCreateInput {
   id: ID
+  network: String
   number: Int!
   authoredBy: String!
   startDateTime: DateTime!
@@ -396,6 +419,8 @@ type BlockNumberEdge {
 enum BlockNumberOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   number_ASC
   number_DESC
   authoredBy_ASC
@@ -408,6 +433,7 @@ enum BlockNumberOrderByInput {
 
 type BlockNumberPreviousValues {
   id: ID!
+  network: String
   number: Int!
   authoredBy: String!
   startDateTime: DateTime!
@@ -433,6 +459,7 @@ input BlockNumberSubscriptionWhereInput {
 }
 
 input BlockNumberUpdateDataInput {
+  network: String
   number: Int
   authoredBy: String
   startDateTime: DateTime
@@ -440,6 +467,7 @@ input BlockNumberUpdateDataInput {
 }
 
 input BlockNumberUpdateInput {
+  network: String
   number: Int
   authoredBy: String
   startDateTime: DateTime
@@ -447,6 +475,7 @@ input BlockNumberUpdateInput {
 }
 
 input BlockNumberUpdateManyMutationInput {
+  network: String
   number: Int
   authoredBy: String
   startDateTime: DateTime
@@ -480,6 +509,20 @@ input BlockNumberWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   number: Int
   number_not: Int
   number_in: [Int!]
@@ -537,6 +580,7 @@ input BlockNumberWhereUniqueInput {
 
 type Bounty {
   id: Int!
+  network: String
   proposer: String!
   value: String!
   fee: String
@@ -555,6 +599,7 @@ type BountyConnection {
 }
 
 input BountyCreateInput {
+  network: String
   proposer: String!
   value: String!
   fee: String
@@ -572,6 +617,7 @@ input BountyCreateOneWithoutBountyStatusInput {
 }
 
 input BountyCreateWithoutBountyStatusInput {
+  network: String
   proposer: String!
   value: String!
   fee: String
@@ -590,6 +636,8 @@ type BountyEdge {
 enum BountyOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   proposer_ASC
   proposer_DESC
   value_ASC
@@ -610,6 +658,7 @@ enum BountyOrderByInput {
 
 type BountyPreviousValues {
   id: Int!
+  network: String
   proposer: String!
   value: String!
   fee: String
@@ -865,6 +914,7 @@ input BountySubscriptionWhereInput {
 }
 
 input BountyUpdateInput {
+  network: String
   proposer: String
   value: String
   fee: String
@@ -877,6 +927,7 @@ input BountyUpdateInput {
 }
 
 input BountyUpdateManyMutationInput {
+  network: String
   proposer: String
   value: String
   fee: String
@@ -895,6 +946,7 @@ input BountyUpdateOneRequiredWithoutBountyStatusInput {
 }
 
 input BountyUpdateWithoutBountyStatusDataInput {
+  network: String
   proposer: String
   value: String
   fee: String
@@ -919,6 +971,20 @@ input BountyWhereInput {
   id_lte: Int
   id_gt: Int
   id_gte: Int
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   proposer: String
   proposer_not: String
   proposer_in: [String!]
@@ -1040,6 +1106,7 @@ input BountyWhereUniqueInput {
 
 type Council {
   id: ID!
+  network: String
   blockNumber: BlockNumber!
   members(where: CouncilMemberWhereInput, orderBy: CouncilMemberOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [CouncilMember!]
 }
@@ -1052,6 +1119,7 @@ type CouncilConnection {
 
 input CouncilCreateInput {
   id: ID
+  network: String
   blockNumber: BlockNumberCreateOneInput!
   members: CouncilMemberCreateManyWithoutCouncilsInput
 }
@@ -1063,6 +1131,7 @@ input CouncilCreateManyWithoutMembersInput {
 
 input CouncilCreateWithoutMembersInput {
   id: ID
+  network: String
   blockNumber: BlockNumberCreateOneInput!
 }
 
@@ -1073,6 +1142,7 @@ type CouncilEdge {
 
 type CouncilMember {
   id: ID!
+  network: String
   address: String!
   councils(where: CouncilWhereInput, orderBy: CouncilOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Council!]
 }
@@ -1085,6 +1155,7 @@ type CouncilMemberConnection {
 
 input CouncilMemberCreateInput {
   id: ID
+  network: String
   address: String!
   councils: CouncilCreateManyWithoutMembersInput
 }
@@ -1096,6 +1167,7 @@ input CouncilMemberCreateManyWithoutCouncilsInput {
 
 input CouncilMemberCreateWithoutCouncilsInput {
   id: ID
+  network: String
   address: String!
 }
 
@@ -1107,12 +1179,15 @@ type CouncilMemberEdge {
 enum CouncilMemberOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   address_ASC
   address_DESC
 }
 
 type CouncilMemberPreviousValues {
   id: ID!
+  network: String
   address: String!
 }
 
@@ -1131,6 +1206,20 @@ input CouncilMemberScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   address: String
   address_not: String
   address_in: [String!]
@@ -1169,15 +1258,18 @@ input CouncilMemberSubscriptionWhereInput {
 }
 
 input CouncilMemberUpdateInput {
+  network: String
   address: String
   councils: CouncilUpdateManyWithoutMembersInput
 }
 
 input CouncilMemberUpdateManyDataInput {
+  network: String
   address: String
 }
 
 input CouncilMemberUpdateManyMutationInput {
+  network: String
   address: String
 }
 
@@ -1199,6 +1291,7 @@ input CouncilMemberUpdateManyWithWhereNestedInput {
 }
 
 input CouncilMemberUpdateWithoutCouncilsDataInput {
+  network: String
   address: String
 }
 
@@ -1228,6 +1321,20 @@ input CouncilMemberWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   address: String
   address_not: String
   address_in: [String!]
@@ -1258,10 +1365,13 @@ input CouncilMemberWhereUniqueInput {
 enum CouncilOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
 }
 
 type CouncilPreviousValues {
   id: ID!
+  network: String
 }
 
 input CouncilScalarWhereInput {
@@ -1279,6 +1389,20 @@ input CouncilScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   AND: [CouncilScalarWhereInput!]
   OR: [CouncilScalarWhereInput!]
   NOT: [CouncilScalarWhereInput!]
@@ -1303,8 +1427,17 @@ input CouncilSubscriptionWhereInput {
 }
 
 input CouncilUpdateInput {
+  network: String
   blockNumber: BlockNumberUpdateOneRequiredInput
   members: CouncilMemberUpdateManyWithoutCouncilsInput
+}
+
+input CouncilUpdateManyDataInput {
+  network: String
+}
+
+input CouncilUpdateManyMutationInput {
+  network: String
 }
 
 input CouncilUpdateManyWithoutMembersInput {
@@ -1316,9 +1449,16 @@ input CouncilUpdateManyWithoutMembersInput {
   update: [CouncilUpdateWithWhereUniqueWithoutMembersInput!]
   upsert: [CouncilUpsertWithWhereUniqueWithoutMembersInput!]
   deleteMany: [CouncilScalarWhereInput!]
+  updateMany: [CouncilUpdateManyWithWhereNestedInput!]
+}
+
+input CouncilUpdateManyWithWhereNestedInput {
+  where: CouncilScalarWhereInput!
+  data: CouncilUpdateManyDataInput!
 }
 
 input CouncilUpdateWithoutMembersDataInput {
+  network: String
   blockNumber: BlockNumberUpdateOneRequiredInput
 }
 
@@ -1348,6 +1488,20 @@ input CouncilWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   blockNumber: BlockNumberWhereInput
   members_every: CouncilMemberWhereInput
   members_some: CouncilMemberWhereInput
@@ -1367,6 +1521,7 @@ scalar Long
 
 type Motion {
   id: Int!
+  network: String
   author: String!
   memberCount: Int!
   metaDescription: String!
@@ -1388,6 +1543,7 @@ type MotionConnection {
 }
 
 input MotionCreateInput {
+  network: String
   author: String!
   memberCount: Int!
   metaDescription: String!
@@ -1423,6 +1579,7 @@ input MotionCreateOneWithoutTreasurySpendProposalInput {
 }
 
 input MotionCreateWithoutMotionProposalArgumentsInput {
+  network: String
   author: String!
   memberCount: Int!
   metaDescription: String!
@@ -1437,6 +1594,7 @@ input MotionCreateWithoutMotionProposalArgumentsInput {
 }
 
 input MotionCreateWithoutMotionStatusInput {
+  network: String
   author: String!
   memberCount: Int!
   metaDescription: String!
@@ -1451,6 +1609,7 @@ input MotionCreateWithoutMotionStatusInput {
 }
 
 input MotionCreateWithoutPreimageInput {
+  network: String
   author: String!
   memberCount: Int!
   metaDescription: String!
@@ -1465,6 +1624,7 @@ input MotionCreateWithoutPreimageInput {
 }
 
 input MotionCreateWithoutTreasurySpendProposalInput {
+  network: String
   author: String!
   memberCount: Int!
   metaDescription: String!
@@ -1486,6 +1646,8 @@ type MotionEdge {
 enum MotionOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   author_ASC
   author_DESC
   memberCount_ASC
@@ -1506,6 +1668,7 @@ enum MotionOrderByInput {
 
 type MotionPreviousValues {
   id: Int!
+  network: String
   author: String!
   memberCount: Int!
   metaDescription: String!
@@ -1980,6 +2143,7 @@ input MotionSubscriptionWhereInput {
 }
 
 input MotionUpdateInput {
+  network: String
   author: String
   memberCount: Int
   metaDescription: String
@@ -1995,6 +2159,7 @@ input MotionUpdateInput {
 }
 
 input MotionUpdateManyMutationInput {
+  network: String
   author: String
   memberCount: Int
   metaDescription: String
@@ -2038,6 +2203,7 @@ input MotionUpdateOneWithoutTreasurySpendProposalInput {
 }
 
 input MotionUpdateWithoutMotionProposalArgumentsDataInput {
+  network: String
   author: String
   memberCount: Int
   metaDescription: String
@@ -2052,6 +2218,7 @@ input MotionUpdateWithoutMotionProposalArgumentsDataInput {
 }
 
 input MotionUpdateWithoutMotionStatusDataInput {
+  network: String
   author: String
   memberCount: Int
   metaDescription: String
@@ -2066,6 +2233,7 @@ input MotionUpdateWithoutMotionStatusDataInput {
 }
 
 input MotionUpdateWithoutPreimageDataInput {
+  network: String
   author: String
   memberCount: Int
   metaDescription: String
@@ -2080,6 +2248,7 @@ input MotionUpdateWithoutPreimageDataInput {
 }
 
 input MotionUpdateWithoutTreasurySpendProposalDataInput {
+  network: String
   author: String
   memberCount: Int
   metaDescription: String
@@ -2122,6 +2291,20 @@ input MotionWhereInput {
   id_lte: Int
   id_gt: Int
   id_gte: Int
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   author: String
   author_not: String
   author_in: [String!]
@@ -2273,6 +2456,7 @@ type Mutation {
   deleteManyBountyStatuses(where: BountyStatusWhereInput): BatchPayload!
   createCouncil(data: CouncilCreateInput!): Council!
   updateCouncil(data: CouncilUpdateInput!, where: CouncilWhereUniqueInput!): Council
+  updateManyCouncils(data: CouncilUpdateManyMutationInput!, where: CouncilWhereInput): BatchPayload!
   upsertCouncil(where: CouncilWhereUniqueInput!, create: CouncilCreateInput!, update: CouncilUpdateInput!): Council!
   deleteCouncil(where: CouncilWhereUniqueInput!): Council
   deleteManyCouncils(where: CouncilWhereInput): BatchPayload!
@@ -2393,6 +2577,7 @@ type PageInfo {
 
 type Preimage {
   id: ID!
+  network: String
   author: String!
   depositAmount: String!
   hash: String!
@@ -2633,6 +2818,7 @@ type PreimageConnection {
 
 input PreimageCreateInput {
   id: ID
+  network: String
   author: String!
   depositAmount: String!
   hash: String!
@@ -2673,6 +2859,7 @@ input PreimageCreateOneWithoutReferendumInput {
 
 input PreimageCreateWithoutMotionInput {
   id: ID
+  network: String
   author: String!
   depositAmount: String!
   hash: String!
@@ -2687,6 +2874,7 @@ input PreimageCreateWithoutMotionInput {
 
 input PreimageCreateWithoutPreimageArgumentsInput {
   id: ID
+  network: String
   author: String!
   depositAmount: String!
   hash: String!
@@ -2701,6 +2889,7 @@ input PreimageCreateWithoutPreimageArgumentsInput {
 
 input PreimageCreateWithoutPreimageStatusInput {
   id: ID
+  network: String
   author: String!
   depositAmount: String!
   hash: String!
@@ -2715,6 +2904,7 @@ input PreimageCreateWithoutPreimageStatusInput {
 
 input PreimageCreateWithoutProposalInput {
   id: ID
+  network: String
   author: String!
   depositAmount: String!
   hash: String!
@@ -2729,6 +2919,7 @@ input PreimageCreateWithoutProposalInput {
 
 input PreimageCreateWithoutReferendumInput {
   id: ID
+  network: String
   author: String!
   depositAmount: String!
   hash: String!
@@ -2749,6 +2940,8 @@ type PreimageEdge {
 enum PreimageOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   author_ASC
   author_DESC
   depositAmount_ASC
@@ -2765,6 +2958,7 @@ enum PreimageOrderByInput {
 
 type PreimagePreviousValues {
   id: ID!
+  network: String
   author: String!
   depositAmount: String!
   hash: String!
@@ -2979,6 +3173,7 @@ input PreimageSubscriptionWhereInput {
 }
 
 input PreimageUpdateInput {
+  network: String
   author: String
   depositAmount: String
   hash: String
@@ -2993,6 +3188,7 @@ input PreimageUpdateInput {
 }
 
 input PreimageUpdateManyMutationInput {
+  network: String
   author: String
   depositAmount: String
   hash: String
@@ -3043,6 +3239,7 @@ input PreimageUpdateOneWithoutReferendumInput {
 }
 
 input PreimageUpdateWithoutMotionDataInput {
+  network: String
   author: String
   depositAmount: String
   hash: String
@@ -3056,6 +3253,7 @@ input PreimageUpdateWithoutMotionDataInput {
 }
 
 input PreimageUpdateWithoutPreimageArgumentsDataInput {
+  network: String
   author: String
   depositAmount: String
   hash: String
@@ -3069,6 +3267,7 @@ input PreimageUpdateWithoutPreimageArgumentsDataInput {
 }
 
 input PreimageUpdateWithoutPreimageStatusDataInput {
+  network: String
   author: String
   depositAmount: String
   hash: String
@@ -3082,6 +3281,7 @@ input PreimageUpdateWithoutPreimageStatusDataInput {
 }
 
 input PreimageUpdateWithoutProposalDataInput {
+  network: String
   author: String
   depositAmount: String
   hash: String
@@ -3095,6 +3295,7 @@ input PreimageUpdateWithoutProposalDataInput {
 }
 
 input PreimageUpdateWithoutReferendumDataInput {
+  network: String
   author: String
   depositAmount: String
   hash: String
@@ -3147,6 +3348,20 @@ input PreimageWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   author: String
   author_not: String
   author_in: [String!]
@@ -3251,6 +3466,7 @@ input PreimageWhereUniqueInput {
 
 type Proposal {
   id: Int!
+  network: String
   author: String!
   depositAmount: String!
   preimage: Preimage
@@ -3266,6 +3482,7 @@ type ProposalConnection {
 }
 
 input ProposalCreateInput {
+  network: String
   author: String!
   depositAmount: String!
   preimage: PreimageCreateOneWithoutProposalInput
@@ -3285,6 +3502,7 @@ input ProposalCreateOneWithoutProposalStatusInput {
 }
 
 input ProposalCreateWithoutPreimageInput {
+  network: String
   author: String!
   depositAmount: String!
   preimageHash: String!
@@ -3293,6 +3511,7 @@ input ProposalCreateWithoutPreimageInput {
 }
 
 input ProposalCreateWithoutProposalStatusInput {
+  network: String
   author: String!
   depositAmount: String!
   preimage: PreimageCreateOneWithoutProposalInput
@@ -3308,6 +3527,8 @@ type ProposalEdge {
 enum ProposalOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   author_ASC
   author_DESC
   depositAmount_ASC
@@ -3320,6 +3541,7 @@ enum ProposalOrderByInput {
 
 type ProposalPreviousValues {
   id: Int!
+  network: String
   author: String!
   depositAmount: String!
   preimageHash: String!
@@ -3571,6 +3793,7 @@ input ProposalSubscriptionWhereInput {
 }
 
 input ProposalUpdateInput {
+  network: String
   author: String
   depositAmount: String
   preimage: PreimageUpdateOneWithoutProposalInput
@@ -3580,6 +3803,7 @@ input ProposalUpdateInput {
 }
 
 input ProposalUpdateManyMutationInput {
+  network: String
   author: String
   depositAmount: String
   preimageHash: String
@@ -3603,6 +3827,7 @@ input ProposalUpdateOneWithoutPreimageInput {
 }
 
 input ProposalUpdateWithoutPreimageDataInput {
+  network: String
   author: String
   depositAmount: String
   preimageHash: String
@@ -3611,6 +3836,7 @@ input ProposalUpdateWithoutPreimageDataInput {
 }
 
 input ProposalUpdateWithoutProposalStatusDataInput {
+  network: String
   author: String
   depositAmount: String
   preimage: PreimageUpdateOneWithoutProposalInput
@@ -3637,6 +3863,20 @@ input ProposalWhereInput {
   id_lte: Int
   id_gt: Int
   id_gte: Int
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   author: String
   author_not: String
   author_in: [String!]
@@ -3773,6 +4013,7 @@ type Query {
 
 type Referendum {
   id: Int!
+  network: String
   delay: Int!
   end: Int!
   preimage: Preimage
@@ -3789,6 +4030,7 @@ type ReferendumConnection {
 }
 
 input ReferendumCreateInput {
+  network: String
   delay: Int!
   end: Int!
   preimage: PreimageCreateOneWithoutReferendumInput
@@ -3809,6 +4051,7 @@ input ReferendumCreateOneWithoutReferendumStatusInput {
 }
 
 input ReferendumCreateWithoutPreimageInput {
+  network: String
   delay: Int!
   end: Int!
   preimageHash: String!
@@ -3818,6 +4061,7 @@ input ReferendumCreateWithoutPreimageInput {
 }
 
 input ReferendumCreateWithoutReferendumStatusInput {
+  network: String
   delay: Int!
   end: Int!
   preimage: PreimageCreateOneWithoutReferendumInput
@@ -3834,6 +4078,8 @@ type ReferendumEdge {
 enum ReferendumOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   delay_ASC
   delay_DESC
   end_ASC
@@ -3848,6 +4094,7 @@ enum ReferendumOrderByInput {
 
 type ReferendumPreviousValues {
   id: Int!
+  network: String
   delay: Int!
   end: Int!
   preimageHash: String!
@@ -4100,6 +4347,7 @@ input ReferendumSubscriptionWhereInput {
 }
 
 input ReferendumUpdateInput {
+  network: String
   delay: Int
   end: Int
   preimage: PreimageUpdateOneWithoutReferendumInput
@@ -4110,6 +4358,7 @@ input ReferendumUpdateInput {
 }
 
 input ReferendumUpdateManyMutationInput {
+  network: String
   delay: Int
   end: Int
   preimageHash: String
@@ -4134,6 +4383,7 @@ input ReferendumUpdateOneWithoutPreimageInput {
 }
 
 input ReferendumUpdateWithoutPreimageDataInput {
+  network: String
   delay: Int
   end: Int
   preimageHash: String
@@ -4143,6 +4393,7 @@ input ReferendumUpdateWithoutPreimageDataInput {
 }
 
 input ReferendumUpdateWithoutReferendumStatusDataInput {
+  network: String
   delay: Int
   end: Int
   preimage: PreimageUpdateOneWithoutReferendumInput
@@ -4170,6 +4421,20 @@ input ReferendumWhereInput {
   id_lte: Int
   id_gt: Int
   id_gte: Int
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   delay: Int
   delay_not: Int
   delay_in: [Int!]
@@ -4263,6 +4528,7 @@ type Subscription {
 
 type Tip {
   id: Int!
+  network: String
   hash: String!
   reason: String!
   who: String!
@@ -4279,6 +4545,7 @@ type TipConnection {
 }
 
 input TipCreateInput {
+  network: String
   hash: String!
   reason: String!
   who: String!
@@ -4294,6 +4561,7 @@ input TipCreateOneWithoutTipStatusInput {
 }
 
 input TipCreateWithoutTipStatusInput {
+  network: String
   hash: String!
   reason: String!
   who: String!
@@ -4310,6 +4578,8 @@ type TipEdge {
 enum TipOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   hash_ASC
   hash_DESC
   reason_ASC
@@ -4326,6 +4596,7 @@ enum TipOrderByInput {
 
 type TipPreviousValues {
   id: Int!
+  network: String
   hash: String!
   reason: String!
   who: String!
@@ -4579,6 +4850,7 @@ input TipSubscriptionWhereInput {
 }
 
 input TipUpdateInput {
+  network: String
   hash: String
   reason: String
   who: String
@@ -4589,6 +4861,7 @@ input TipUpdateInput {
 }
 
 input TipUpdateManyMutationInput {
+  network: String
   hash: String
   reason: String
   who: String
@@ -4605,6 +4878,7 @@ input TipUpdateOneRequiredWithoutTipStatusInput {
 }
 
 input TipUpdateWithoutTipStatusDataInput {
+  network: String
   hash: String
   reason: String
   who: String
@@ -4627,6 +4901,20 @@ input TipWhereInput {
   id_lte: Int
   id_gt: Int
   id_gte: Int
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   hash: String
   hash_not: String
   hash_in: [String!]
@@ -4719,6 +5007,7 @@ input TipWhereUniqueInput {
 
 type TreasurySpendProposal {
   id: Int!
+  network: String
   proposer: String!
   beneficiary: String!
   value: String!
@@ -4735,6 +5024,7 @@ type TreasurySpendProposalConnection {
 }
 
 input TreasurySpendProposalCreateInput {
+  network: String
   proposer: String!
   beneficiary: String!
   value: String!
@@ -4755,6 +5045,7 @@ input TreasurySpendProposalCreateOneWithoutTreasuryStatusInput {
 }
 
 input TreasurySpendProposalCreateWithoutMotionInput {
+  network: String
   proposer: String!
   beneficiary: String!
   value: String!
@@ -4764,6 +5055,7 @@ input TreasurySpendProposalCreateWithoutMotionInput {
 }
 
 input TreasurySpendProposalCreateWithoutTreasuryStatusInput {
+  network: String
   proposer: String!
   beneficiary: String!
   value: String!
@@ -4780,6 +5072,8 @@ type TreasurySpendProposalEdge {
 enum TreasurySpendProposalOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   proposer_ASC
   proposer_DESC
   beneficiary_ASC
@@ -4794,6 +5088,7 @@ enum TreasurySpendProposalOrderByInput {
 
 type TreasurySpendProposalPreviousValues {
   id: Int!
+  network: String
   proposer: String!
   beneficiary: String!
   value: String!
@@ -4820,6 +5115,7 @@ input TreasurySpendProposalSubscriptionWhereInput {
 }
 
 input TreasurySpendProposalUpdateInput {
+  network: String
   proposer: String
   beneficiary: String
   value: String
@@ -4830,6 +5126,7 @@ input TreasurySpendProposalUpdateInput {
 }
 
 input TreasurySpendProposalUpdateManyMutationInput {
+  network: String
   proposer: String
   beneficiary: String
   value: String
@@ -4854,6 +5151,7 @@ input TreasurySpendProposalUpdateOneWithoutMotionInput {
 }
 
 input TreasurySpendProposalUpdateWithoutMotionDataInput {
+  network: String
   proposer: String
   beneficiary: String
   value: String
@@ -4863,6 +5161,7 @@ input TreasurySpendProposalUpdateWithoutMotionDataInput {
 }
 
 input TreasurySpendProposalUpdateWithoutTreasuryStatusDataInput {
+  network: String
   proposer: String
   beneficiary: String
   value: String
@@ -4890,6 +5189,20 @@ input TreasurySpendProposalWhereInput {
   id_lte: Int
   id_gt: Int
   id_gte: Int
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   proposer: String
   proposer_not: String
   proposer_in: [String!]
@@ -5196,6 +5509,7 @@ input TreasuryStatusWhereUniqueInput {
 
 type Vote {
   id: ID!
+  network: String
   proposalType: String
   proposalId: Int
   address: String
@@ -5213,6 +5527,7 @@ type VoteConnection {
 
 input VoteCreateInput {
   id: ID
+  network: String
   proposalType: String
   proposalId: Int
   address: String
@@ -5230,6 +5545,8 @@ type VoteEdge {
 enum VoteOrderByInput {
   id_ASC
   id_DESC
+  network_ASC
+  network_DESC
   proposalType_ASC
   proposalType_DESC
   proposalId_ASC
@@ -5248,6 +5565,7 @@ enum VoteOrderByInput {
 
 type VotePreviousValues {
   id: ID!
+  network: String
   proposalType: String
   proposalId: Int
   address: String
@@ -5276,6 +5594,7 @@ input VoteSubscriptionWhereInput {
 }
 
 input VoteUpdateInput {
+  network: String
   proposalType: String
   proposalId: Int
   address: String
@@ -5286,6 +5605,7 @@ input VoteUpdateInput {
 }
 
 input VoteUpdateManyMutationInput {
+  network: String
   proposalType: String
   proposalId: Int
   address: String
@@ -5310,6 +5630,20 @@ input VoteWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  network: String
+  network_not: String
+  network_in: [String!]
+  network_not_in: [String!]
+  network_lt: String
+  network_lte: String
+  network_gt: String
+  network_gte: String
+  network_contains: String
+  network_not_contains: String
+  network_starts_with: String
+  network_not_starts_with: String
+  network_ends_with: String
+  network_not_ends_with: String
   proposalType: String
   proposalType_not: String
   proposalType_in: [String!]

@@ -1,6 +1,7 @@
 
 type BlockNumber {
   id: ID! @id
+  network: String
   number: Int! @unique
   authoredBy: String!
   startDateTime: DateTime!
@@ -9,18 +10,21 @@ type BlockNumber {
 
 type Council {
   id: ID! @id
+  network: String
   blockNumber: BlockNumber! @relation(name: "CouncilFromBlockNumber", link: INLINE)
   members: [CouncilMember]! @relation(name: "MembersCouncils")
 }
 
 type CouncilMember {
   id: ID! @id
+  network: String
   address: String! @unique
   councils: [Council]! @relation(name: "MembersCouncils")
 }
 
 type Motion {
   id: Int! @id(strategy: SEQUENCE) @sequence(name: "MOTION_SEQUENCE" initialValue:1 allocationSize:1)
+  network: String
   author: String!
   memberCount: Int!
   metaDescription: String!
@@ -52,6 +56,7 @@ type MotionStatus {
 
 type Proposal {
   id: Int! @id(strategy: SEQUENCE) @sequence(name: "PROPOSAL_SEQUENCE" initialValue:1 allocationSize:1)
+  network: String
   author: String!
   depositAmount: String!
   preimage: Preimage @relation(name: "PreimageForProposal")
@@ -70,6 +75,7 @@ type ProposalStatus {
 
 type Preimage {
   id: ID! @id
+  network: String
   author: String!
   depositAmount: String!
   hash: String!
@@ -99,6 +105,7 @@ type PreimageArgument {
 
 type Referendum {
   id: Int! @id(strategy: SEQUENCE) @sequence(name: "REFERENDUM_SEQUENCE" initialValue:1 allocationSize:1)
+  network: String
   delay: Int!
   end: Int!
   preimage: Preimage @relation(name: "PreimageForReferendum")
@@ -125,6 +132,7 @@ type BlockIndex {
 
 type TreasurySpendProposal {
   id: Int! @id(strategy: SEQUENCE) @sequence(name: "TREASURY_SPEND_PROPOSAL_SEQUENCE" initialValue:1 allocationSize:1)
+  network: String
   proposer: String!
   beneficiary: String!
   value: String!
@@ -144,6 +152,7 @@ type TreasuryStatus {
 
 type Tip {
   id: Int! @id(strategy: SEQUENCE) @sequence(name: "TIP_SEQUENCE" initialValue:1 allocationSize:1)
+  network: String
   hash: String!
   reason: String!
   who: String!
@@ -163,6 +172,7 @@ type TipStatus {
 
 type Bounty {
   id: Int! @id(strategy: SEQUENCE) @sequence(name: "BOUNTY_SEQUENCE" initialValue:1 allocationSize:1)
+  network: String
   proposer: String!
   value: String!
   fee: String
@@ -184,6 +194,7 @@ type BountyStatus {
 
 type Account {
   id: ID! @id
+  network: String
   address: String
   balance: String
   display: String
@@ -191,6 +202,7 @@ type Account {
 
 type Vote {
   id: ID! @id
+  network: String
   proposalType: String
   proposalId: Int
   address: String

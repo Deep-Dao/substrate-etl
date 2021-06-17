@@ -16,6 +16,7 @@ import {
 } from './types';
 
 const l = logger('Task: Referenda');
+const network = process.env.NETWORK;
 
 /*
  *  ======= Table (Referendum) ======
@@ -141,6 +142,7 @@ const createReferendum: Task<NomidotReferendum[]> = {
           : undefined;
 
         await prisma.createReferendum({
+          network,
           delay: delay.toNumber(),
           end: end.toNumber(),
           preimage: notedPreimage

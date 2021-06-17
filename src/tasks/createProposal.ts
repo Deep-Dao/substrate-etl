@@ -21,6 +21,7 @@ import {
 } from './types';
 
 const l = logger('Task: Proposals');
+const network = process.env.NETWORK;
 
 /*
  *  ======= Table (Proposal) ======
@@ -124,6 +125,7 @@ const createProposal: Task<NomidotProposal[]> = {
           })[0];
 
         await prisma.createProposal({
+          network,
           author: author.toString(),
           depositAmount: depositAmount.toString(),
           preimage: notedPreimage

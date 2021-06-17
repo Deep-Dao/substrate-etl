@@ -17,6 +17,7 @@ import {
 } from './types';
 
 const l = logger('Task: Motions');
+const network = process.env.NETWORK;
 
 /*
  *  ======= Table (Motion) ======
@@ -181,6 +182,7 @@ const createMotion: Task<NomidotMotion[]> = {
             : [];
 
         await prisma.createMotion({
+          network,
           author: author.toString(),
           memberCount,
           metaDescription,

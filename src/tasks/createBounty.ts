@@ -20,6 +20,7 @@ import {
 } from './types';
 
 const l = logger('Task: Bounty');
+const network = process.env.NETWORK;
 
 /*
  *  ======= Table (Bounty) ======
@@ -109,6 +110,7 @@ const createBounty: Task<NomidotBounty[]> = {
 		  } = prop;
 
 		  await prisma.createBounty({
+			network,
 			bountyId,
 			proposer: proposer.toString(),
 			value: value.toString(),
