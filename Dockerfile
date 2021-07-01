@@ -1,6 +1,4 @@
-FROM node:12.0.0-alpine
-
-# ENV PRISMA_ENDPOINT http://prisma:4466
+FROM node:14.15.0-alpine
 
 WORKDIR /node_watcher
 
@@ -14,5 +12,4 @@ RUN yarn
 COPY ./ ./
 
 # Create the database schema
-CMD ["yarn", "prisma", "deploy"]
-
+CMD ["yarn", "start"]
