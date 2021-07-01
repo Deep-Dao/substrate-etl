@@ -23,11 +23,11 @@ services:
         databases:
           default:
             connector: postgres
-            host: postgres
-            user: prisma
-            password: prisma
+            host: ${PRISMA_PG_HOST}
+            user: ${PRISMA_PG_USER}
+            password: ${PRISMA_PG_PASSWORD}
             rawAccess: true
-            port: 5432
+            port: ${PRISMA_PG_PORT}
             migrations: true
 volumes:
   postgres: ~
