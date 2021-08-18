@@ -31,6 +31,7 @@
     "local:reset": "yarn reset && yarn start:local",
     "start": "node -r ts-node/register --max-old-space-size=8192 ./src/index.ts",
     "votes:kusama": "NETWORK=kusama REFRENDUM_INDEX=127 MOTION_INDEX=341 TECH_COMMITTEE_INDEX=84 node -r ts-node/register --max-old-space-size=8192 ./src/votes.ts",
+    "votes:polkadot": "NETWORK=kusama REFRENDUM_INDEX=31 MOTION_INDEX=104 TECH_COMMITTEE_INDEX=18 node -r ts-node/register --max-old-space-size=8192 ./src/votes.ts",
     "motions": "node -r ts-node/register --max-old-space-size=8192 ./src/motions.ts",
     "api:bump": "yarn add @polkadot/api @polkadot/dev"
   },
