@@ -52,7 +52,24 @@ async function start() {
 
 		if (json.data?.list?.length) {
 			json.data.list.forEach(async (row: any) => {
+				const existing = await prisma.votes({
+					where: {
+						network: NETWORK,
+						proposalType: 'referendum',
+						proposalId: i,
+						address: row.account?.address,
+						vote: row.passed ? 'AYE' : 'NAY',
+						amount: row.amount,
+						conviction: row.conviction
+					},
+				});
+
+				if (existing && existing.length) {
+					return;
+				}
+
 				const r = await prisma.createVote({
+					network: NETWORK,
 					proposalType: 'referendum',
 					proposalId: i,
 					address: row.account?.address,
@@ -96,7 +113,22 @@ async function start() {
 
 		if (json.data?.info?.votes?.length) {
 			json.data?.info?.votes.forEach(async (row: any) => {
+				const existing = await prisma.votes({
+					where: {
+						network: NETWORK,
+						proposalType: 'motion',
+						proposalId: i,
+						address: row.account?.address,
+						vote: row.passed ? 'AYE' : 'NAY'
+					},
+				});
+
+				if (existing && existing.length) {
+					return;
+				}
+
 				const r = await prisma.createVote({
+					network: NETWORK,
 					proposalType: 'motion',
 					proposalId: i,
 					address: row.account?.address,
@@ -132,7 +164,22 @@ async function start() {
 
 		if (json.data?.info?.votes?.length) {
 			json.data?.info?.votes.forEach(async (row: any) => {
+				const existing = await prisma.votes({
+					where: {
+						network: NETWORK,
+						proposalType: 'tech_committee_proposal',
+						proposalId: i,
+						address: row.account?.address,
+						vote: row.passed ? 'AYE' : 'NAY'
+					},
+				});
+
+				if (existing && existing.length) {
+					return;
+				}
+
 				const r = await prisma.createVote({
+					network: NETWORK,
 					proposalType: 'tech_committee_proposal',
 					proposalId: i,
 					address: row.account?.address,
