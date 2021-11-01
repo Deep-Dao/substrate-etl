@@ -3,14 +3,9 @@ import fetch from 'node-fetch';
 const { prisma } = require('./generated/prisma-client');
 
 const NETWORK = process.env.NETWORK;
-const REFRENDUM_INDEX = process.env.REFRENDUM_INDEX;
-const MOTION_INDEX = process.env.MOTION_INDEX;
-const TECH_COMMITTEE_INDEX = process.env.TECH_COMMITTEE_INDEX;
-
-if (!NETWORK || !Number(REFRENDUM_INDEX) || !Number(MOTION_INDEX) || !Number(TECH_COMMITTEE_INDEX)) {
-	console.error("Please provide NETWORK, REFRENDUM_INDEX, MOTION_INDEX and TECH_COMMITTEE_INDEX environment variables");
-	process.exit(1);
-}
+let REFRENDUM_INDEX = process.env.REFRENDUM_INDEX;
+let MOTION_INDEX = process.env.MOTION_INDEX;
+let TECH_COMMITTEE_INDEX = process.env.TECH_COMMITTEE_INDEX;
 
 const wait = () => new Promise(r => {
 	setTimeout(r, 1000)
@@ -20,7 +15,38 @@ async function start() {
 
 	console.log('getting votes');
 
-	for (let i = 0; i <= Number(REFRENDUM_INDEX); i++) {
+	const indexResult = await fetch(`https://${NETWORK}.webapi.subscan.io/api/scan/democracy/referendums`, {
+		"headers": {
+			"accept": "application/json, text/plain, */*",
+			"accept-language": "en",
+			"cache-control": "no-cache",
+			"content-type": "application/json;charset=UTF-8",
+			"pragma": "no-cache",
+			"sec-ch-ua": "\"Chromium\";v=\"92\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"92\"",
+			"sec-ch-ua-mobile": "?0",
+			"sec-fetch-dest": "empty",
+			"sec-fetch-mode": "cors",
+			"sec-fetch-site": "same-site"
+		},
+		"body": "{\"row\":25,\"page\":0}",
+		"method": "POST",
+	});
+
+	const index = await indexResult.json();
+
+	if (index.data?.list[0]?.referendum_index) {
+		REFRENDUM_INDEX = index.data?.list[0]?.referendum_index;
+	}
+
+	const lastRefs = await prisma.votes({
+		where: {
+			network: NETWORK,
+			proposalType: 'referendum',
+		},
+		last: 1
+	});
+
+	for (let i = lastRefs[0]?.proposalId || 0; i <= Number(REFRENDUM_INDEX); i++) {
 		console.log(`processing ${i}`)
 		await wait();
 
@@ -84,7 +110,38 @@ async function start() {
 
 	console.log('getting motions');
 
-	for (let i = 0; i <= Number(MOTION_INDEX); i++) {
+	const motionIndexResult = await fetch(`https://${NETWORK}.webapi.subscan.io/api/scan/council/proposals`, {
+		"headers": {
+			"accept": "application/json, text/plain, */*",
+			"accept-language": "en",
+			"cache-control": "no-cache",
+			"content-type": "application/json;charset=UTF-8",
+			"pragma": "no-cache",
+			"sec-ch-ua": "\"Chromium\";v=\"92\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"92\"",
+			"sec-ch-ua-mobile": "?0",
+			"sec-fetch-dest": "empty",
+			"sec-fetch-mode": "cors",
+			"sec-fetch-site": "same-site"
+		},
+		"body": "{\"row\":25,\"page\":0}",
+		"method": "POST",
+	});
+
+	const motionIndex = await motionIndexResult.json();
+
+	if (motionIndex.data?.list[0]?.proposal_id) {
+		MOTION_INDEX = motionIndex.data?.list[0]?.proposal_id;
+	}
+
+	const lastMotion = await prisma.votes({
+		where: {
+			network: NETWORK,
+			proposalType: 'motion',
+		},
+		last: 1
+	});
+
+	for (let i = lastMotion[0]?.proposalId || 0; i <= Number(MOTION_INDEX); i++) {
 		console.log(`processing ${i}`)
 		await wait();
 
@@ -138,7 +195,38 @@ async function start() {
 		}
 	}
 
-	for (let i = 0; i <= Number(TECH_COMMITTEE_INDEX); i++) {
+	const tectIndexResult = await fetch(`https://${NETWORK}.webapi.subscan.io/api/scan/techcomm/proposals`, {
+		"headers": {
+			"accept": "application/json, text/plain, */*",
+			"accept-language": "en",
+			"cache-control": "no-cache",
+			"content-type": "application/json;charset=UTF-8",
+			"pragma": "no-cache",
+			"sec-ch-ua": "\"Chromium\";v=\"92\", \" Not A;Brand\";v=\"99\", \"Google Chrome\";v=\"92\"",
+			"sec-ch-ua-mobile": "?0",
+			"sec-fetch-dest": "empty",
+			"sec-fetch-mode": "cors",
+			"sec-fetch-site": "same-site"
+		},
+		"body": "{\"row\":25,\"page\":0}",
+		"method": "POST"
+	});
+
+	const techIndex = await tectIndexResult.json();
+
+	if (techIndex.data?.list[0]?.proposal_id) {
+		TECH_COMMITTEE_INDEX = techIndex.data?.list[0]?.proposal_id;
+	}
+
+	const lastTech = await prisma.votes({
+		where: {
+			network: NETWORK,
+			proposalType: 'tech_committee_proposal',
+		},
+		last: 1
+	});
+
+	for (let i = lastTech[0]?.proposalId || 0; i <= Number(TECH_COMMITTEE_INDEX); i++) {
 
 		const body = {proposal_id: i};
 
