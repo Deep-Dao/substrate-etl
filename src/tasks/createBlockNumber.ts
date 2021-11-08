@@ -21,12 +21,19 @@ const createBlockNumber: Task<NomidotBlock> = {
     cached: Cached,
     api: ApiPromise
   ): Promise<NomidotBlock> => {
-    const [author] = await api.derive.chain.getHeader(blockHash);
-
+    const header = await api.derive.chain.getHeader(blockHash);
     const startDateTime: Moment = await api.query.timestamp.now.at(blockHash);
 
+    if (!header) {
+      return {
+        authoredBy: createType(api.registry, 'AccountId', '0'),
+        hash: blockHash,
+        startDateTime
+      };;
+    }
+
     const result: NomidotBlock = {
-      authoredBy: createType(api.registry, 'AccountId', author[1]),
+      authoredBy: header?.author || createType(api.registry, 'AccountId', '0'),
       hash: blockHash,
       startDateTime,
     };

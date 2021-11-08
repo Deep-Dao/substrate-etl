@@ -1,7 +1,6 @@
 
 
 import { ApiPromise } from '@polkadot/api';
-import { GenericCall } from '@polkadot/types';
 import { BlockNumber, Hash } from '@polkadot/types/interfaces';
 import { logger } from '@polkadot/util';
 
@@ -96,9 +95,10 @@ const createMotion: Task<NomidotMotion[]> = {
           proposal.callIndex
         );
 
-        const params = GenericCall.filterOrigin(proposal.meta).map(({ name }) =>
-          name.toString()
-        );
+        const params = proposal.meta ? proposal.meta.args
+          .filter(({ type }): boolean => type.toString() !== 'Origin')
+          .map(({ name }) => name.toString()) : [];
+
         const values = proposal.args;
         let preimageHash: string | null = null;
 
@@ -120,7 +120,7 @@ const createMotion: Task<NomidotMotion[]> = {
         const result: NomidotMotion = {
           author: motionRawEvent.AccountId,
           memberCount: motionRawEvent.MemberCount,
-          metaDescription: meta.documentation.toString(),
+          metaDescription: meta.docs.toString(),
           method,
           motionProposalHash: motionRawEvent.Hash,
           motionProposalId: motionRawEvent.ProposalIndex,
