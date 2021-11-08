@@ -1,7 +1,7 @@
 
 
 import { ApiPromise } from '@polkadot/api';
-import { Bytes, GenericCall, Option } from '@polkadot/types';
+import { Bytes, Option } from '@polkadot/types';
 import {
   AccountId,
   Balance,
@@ -147,9 +147,9 @@ const createPreimage: Task<NomidotPreimage[]> = {
           proposal.callIndex
         );
 
-        const params = GenericCall.filterOrigin(proposal.meta).map(({ name }) =>
-          name.toString()
-        );
+        const params = proposal.meta ? proposal.meta.args
+          .filter(({ type }): boolean => type.toString() !== 'Origin')
+          .map(({ name }) => name.toString()) : [];
         const values = proposal.args;
 
         const preImageArguments =
@@ -163,7 +163,7 @@ const createPreimage: Task<NomidotPreimage[]> = {
           author: preimageArguments.author,
           depositAmount: preimageArguments.depositAmount,
           hash: preimageArguments.hash,
-          metaDescription: meta.documentation.toString(),
+          metaDescription: meta.docs.toString(),
           method,
           preImageArguments,
           section,
